@@ -56,11 +56,15 @@ class GLOBAL {
   };
   static String GET_ICON_FROM_WMO_CODE(int code, bool isDay) {
     if (INCLUDE(0, 3, code)) return WEATHER_ICONS_WITH_DAY['chiaro']!(isDay);
-    if (INCLUDE(4, 12, code)) return WEATHER_ICONS_WITH_DAY['nuvoloso-tanto']!(isDay);
+    if (INCLUDE(4, 12, code))
+      return WEATHER_ICONS_WITH_DAY['nuvoloso-tanto']!(isDay);
     if (INCLUDE(13, 21, code)) return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
     if (INCLUDE(22, 28, code)) return WEATHER_ICONS_WITH_DAY['neve']!(isDay);
-    if (INCLUDE(29, 35, code)) return WEATHER_ICONS_WITH_DAY['tempesta']!(isDay);
+    if (INCLUDE(29, 35, code))
+      return WEATHER_ICONS_WITH_DAY['tempesta']!(isDay);
     if (INCLUDE(36, 41, code)) return WEATHER_ICONS_WITH_DAY['neve']!(isDay);
+    if (INCLUDE(42, 49, code))
+      return WEATHER_ICONS_WITH_DAY['solo-nuvoloso']!(isDay);
     return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
   }
 

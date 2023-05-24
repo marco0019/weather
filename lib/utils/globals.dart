@@ -18,6 +18,19 @@ class GLOBAL {
     'Saturday',
     'Sunday'
   ];
+  static List<String> MOUNTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'November',
+    'December'
+  ];
   static MultiProvider MAIN =
       MultiProvider(providers: PROVIDERS, child: const Main());
   static const String WEATHER_DEFAULT_REQUEST =
@@ -54,6 +67,8 @@ class GLOBAL {
     'solo-neve': (bool isDay) => WEATHER_ICONS[6],
     'solo-tuoni': (bool isDay) => WEATHER_ICONS[11]
   };
+
+//
   static String GET_ICON_FROM_WMO_CODE(int code, bool isDay) {
     if (INCLUDE(0, 3, code)) return WEATHER_ICONS_WITH_DAY['chiaro']!(isDay);
     if (INCLUDE(4, 12, code))
@@ -65,6 +80,10 @@ class GLOBAL {
     if (INCLUDE(36, 41, code)) return WEATHER_ICONS_WITH_DAY['neve']!(isDay);
     if (INCLUDE(42, 49, code))
       return WEATHER_ICONS_WITH_DAY['solo-nuvoloso']!(isDay);
+    if (INCLUDE(60, 65, code)) return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
+    if (INCLUDE(66, 79, code)) return WEATHER_ICONS_WITH_DAY['neve']!(isDay);
+    if (INCLUDE(80, 84, code)) return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
+    if (INCLUDE(85, 90, code)) return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
     return WEATHER_ICONS_WITH_DAY['pioggia']!(isDay);
   }
 

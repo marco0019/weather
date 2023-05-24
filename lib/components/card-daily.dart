@@ -23,8 +23,7 @@ class WeatherCard extends StatelessWidget {
       required this.pageRedirect});
 
   @override
-  Widget build(BuildContext context) => Card(
-          child: InkWell(
+  Widget build(BuildContext context) => InkWell(
         onTap: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => pageRedirect)),
         borderRadius: BorderRadius.circular(20),
@@ -49,7 +48,7 @@ class WeatherCard extends StatelessWidget {
             ],
           ),
         ),
-      ));
+      );
 }
 /*
     Card(

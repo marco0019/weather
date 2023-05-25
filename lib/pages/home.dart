@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                     const SliverToBoxAdapter(child: SizedBox(height: 10)),
                     SliverToBoxAdapter(
                         child: Row(children: [
-                      Lottie.asset(GLOBAL.WEATHER_ICONS[0],
+                      Lottie.asset(GLOBAL.GET_ICON_FROM_WMO_CODE(10, false),
                           width: 150, height: 150),
                       const Spacer(),
                       const Text('28°',

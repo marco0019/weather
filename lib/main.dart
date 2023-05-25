@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:weather/pages/home.dart';
 import 'package:weather/providers/theme.dart';
-import 'package:weather/utils/globals.dart';
+import 'utils/dependecies.dart';
 
-void main() => runApp(GLOBAL.MAIN);
+Future<void> main() async {
+  await dotenv.load();
+  runApp(GLOBAL.MAIN);
+}
 
 class Main extends StatelessWidget {
   const Main({super.key});
@@ -12,11 +14,10 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: context.watch<ThemeModel>().themeMode,
-      home: const Home()
-    );
+        theme: ThemeData.light(useMaterial3: true),
+        darkTheme: ThemeData.dark(useMaterial3: true),
+        themeMode: context.watch<ThemeModel>().themeMode,
+        home: const Home());
   }
 }
 //https://jsonplaceholder.typicode.com/albums/1

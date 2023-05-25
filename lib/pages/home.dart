@@ -17,6 +17,7 @@ class _HomeState extends State<Home> {
     final isDarkMode = context.watch<ThemeModel>().isDarkMode;
     final dailyIndex = context.watch<DailyIndex>();
     return Scaffold(
+      drawer: Text('drawer'),
         body: FutureBuilder(
             future: weather,
             builder: (context, snapshot) {
@@ -69,7 +70,7 @@ class _HomeState extends State<Home> {
                     const SliverToBoxAdapter(child: SizedBox(height: 20)),
                     const SliverToBoxAdapter(child: Divider()),
                     const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                    //LineChart(data)
+                    
                     const SliverToBoxAdapter(
                         child: Text(
                       'Days',
@@ -97,6 +98,7 @@ class _HomeState extends State<Home> {
                     const SliverToBoxAdapter(child: SizedBox(height: 50)),
                     SliverToBoxAdapter(
                         child: HourlyList(
+                          range: 1,
                             day: DateTime.parse(
                                 value['daily']['time'][dailyIndex.currentDay]),
                             value: value['hourly'])),

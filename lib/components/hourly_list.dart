@@ -4,7 +4,9 @@ import 'package:weather/components/init.dart';
 final class HourlyList extends StatefulWidget {
   final Map<String, dynamic> value;
   final DateTime day;
-  const HourlyList({super.key, required this.day, required this.value});
+  final int range;
+  const HourlyList(
+      {super.key, this.range = 1, required this.day, required this.value});
 
   @override
   State<HourlyList> createState() => _HourlyListState();
@@ -15,9 +17,7 @@ class _HourlyListState extends State<HourlyList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (int i = 0;
-            i < (widget.value['time'] as List<dynamic>).length;
-            i++)
+        for (int i = 0; i < (widget.value['time'] as List<dynamic>).length; i++)
           if (DateTime.parse(widget.value['time'][i]).year == widget.day.year &&
               DateTime.parse(widget.value['time'][i]).month ==
                   widget.day.month &&
@@ -36,3 +36,4 @@ class _HourlyListState extends State<HourlyList> {
     );
   }
 }
+//pk.99377b1a33c03093ee4e776812215a80

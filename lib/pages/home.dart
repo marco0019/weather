@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
-import 'package:weather/components/card-daily.dart';
-import 'package:weather/components/card-data.dart';
-import 'package:weather/components/card-hourly.dart';
-import 'package:weather/components/card-weather-horizontal.dart';
-import 'package:weather/providers/http-requests.dart';
-import 'package:weather/utils/globals.dart';
+import 'package:weather/components/init.dart';
+import 'package:weather/providers/init.dart';
+import '../utils/dependecies.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,6 +14,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<HttpRequest>().weather;
+    final isDarkMode = context.watch<ThemeModel>().isDarkMode;
+    final dailyIndex = context.watch<DailyIndex>();
     return Scaffold(
         body: FutureBuilder(
             future: weather,
@@ -28,27 +23,41 @@ class _HomeState extends State<Home> {
               if (snapshot.hasData) {
                 var value = Map<String, dynamic>.from(snapshot.data as Map);
                 final limit = value['daily']['time'].length;
-                const hours = 24;
-                return ListView(
-                  children: [
-                    const Text('Manziana', style: TextStyle(fontSize: 50)),
-                    Text(
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      centerTitle: false,
+                      pinned: true,
+                      expandedHeight: 200,
+                      leading: const ChangeTheme(),
+                      flexibleSpace: FlexibleSpaceBar(
+                        expandedTitleScale: 2,
+                        //background: Container(color: Colors.pink),
+                        title: Text(
+                          'Manziana',
+                          style: TextStyle(
+                              color: isDarkMode ? Colors.white : Colors.black),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                        child: Text(
                       '${GLOBAL.MOUNTHS[DateTime.now().month]} ${DateTime.now().day}, ${DateTime.now().year}',
                       style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(children: [
+                    )),
+                    const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                    SliverToBoxAdapter(
+                        child: Row(children: [
                       Lottie.asset(GLOBAL.WEATHER_ICONS[0],
                           width: 150, height: 150),
                       const Spacer(),
-                      const Text(
-                        '28°',
-                        style: TextStyle(
-                            fontSize: 80, fontWeight: FontWeight.bold),
-                      )
-                    ]),
-                    const SizedBox(height: 20),
-                    const Row(children: [
+                      const Text('28°',
+                          style: TextStyle(
+                              fontSize: 80, fontWeight: FontWeight.bold))
+                    ])),
+                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                    const SliverToBoxAdapter(
+                        child: Row(children: [
                       Spacer(),
                       CardData(iconName: FontAwesomeIcons.wind, data: '12%'),
                       Spacer(),
@@ -56,105 +65,46 @@ class _HomeState extends State<Home> {
                       Spacer(),
                       CardData(iconName: FontAwesomeIcons.droplet, data: '12%'),
                       Spacer(),
-                    ]),
-                    const SizedBox(height: 20),
-                    const Divider(),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Today',
+                    ])),
+                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                    const SliverToBoxAdapter(child: Divider()),
+                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                    //LineChart(data)
+                    const SliverToBoxAdapter(
+                        child: Text(
+                      'Days',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30),
-                    ),
-                    Container(
-                        color: Colors.white12,
-                        height: 175,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                              CardWeatherHorizontal(
-                                  date: 'Mon 21',
-                                  value: '12*',
-                                  iconName:
-                                      GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
-                            ])),
-                    const SizedBox(height: 50),
-                    Card(
-                      child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 10),
-                              const Row(
+                    )),
+                    SliverToBoxAdapter(
+                        child: SizedBox(
+                            height: 160,
+                            child: ListView(
+                                scrollDirection: Axis.horizontal,
                                 children: [
-                                  Text('Next Days',
-                                      style: TextStyle(fontSize: 30),
-                                      textAlign: TextAlign.start),
-                                  //Spacer()
-                                ],
-                              ),
-                              for (var i = 0; i < limit; i++)
-                                WeatherCard(
-                                    pageRedirect: HourlyPage(
-                                        data: value['daily'],
-                                        day:
-                                            '${GLOBAL.DAYS[DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).weekday - 1]} ${DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).day}, ${DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).month}'),
-                                    weatherCode: value['daily']['weathercode']
-                                        [i],
-                                    precipitationProbability: value['daily']
-                                        ['precipitation_probability_max'][i],
-                                    weatherIconUrl:
-                                        GLOBAL.GET_ICON_FROM_WMO_CODE(
-                                            value['daily']['weathercode'][i],
-                                            GLOBAL.INCLUDE(
-                                                6, 20, DateTime.now().hour)),
-                                    min:
-                                        '${value['daily']['temperature_2m_min'][i]}°',
-                                    max:
-                                        '${value['daily']['temperature_2m_max'][i]}°',
-                                    day:
-                                        '${GLOBAL.DAYS[DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).weekday - 1]} ${DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).day}, ${DateFormat('yyyy-MM-dd').parseUtc(value['daily']['time'][i]).month}',
-                                    //value['daily']['time'][i].toString()
-                                    wind: value['daily']
-                                            ['winddirection_10m_dominant'][i]
-                                        .toString())
-                            ],
-                          )),
-                    )
+                                  for (int i = 0; i < limit; i++)
+                                    CardWeatherHorizontal(
+                                        index: i,
+                                        isCurrentDay:
+                                            dailyIndex.currentDay == i,
+                                        date:
+                                            '${GLOBAL.DAYS[DateTime.parse(value['daily']['time'][i]).weekday - 1].substring(0, 3)} ${DateTime.parse(value['daily']['time'][i]).day}',
+                                        value:
+                                            '${value['daily']['temperature_2m_min'][i]}°/${value['daily']['temperature_2m_max'][i]}°',
+                                        iconName: GLOBAL.GET_ICON_FROM_WMO_CODE(
+                                            50, false)),
+                                ]))),
+                    const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                    SliverToBoxAdapter(
+                        child: HourlyList(
+                            day: DateTime.parse(
+                                value['daily']['time'][dailyIndex.currentDay]),
+                            value: value['hourly'])),
+                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                    const SliverToBoxAdapter(
+                        child: AirQuality(
+                            currentQuality: 10, quality: [0, 12, 12])),
+                    const SliverToBoxAdapter(child: SizedBox(height: 50)),
                   ],
                 );
               } else if (snapshot.hasError) {

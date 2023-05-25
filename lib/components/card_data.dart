@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class CardData extends StatelessWidget {
   final IconData iconName;
@@ -17,7 +15,6 @@ class CardData extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Icon(iconName, color: Colors.blue)),
         ),
-        const SizedBox(height: 0),
         Text(data)
       ],
     );

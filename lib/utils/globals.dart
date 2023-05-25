@@ -1,13 +1,15 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
-import 'package:weather/providers/http-requests.dart';
+import 'package:weather/providers/daily_index.dart';
+import 'package:weather/providers/http_requests.dart';
 import 'package:weather/providers/theme.dart';
 
 class GLOBAL {
   static List<SingleChildWidget> PROVIDERS = [
     ChangeNotifierProvider(create: (_) => HttpRequest()),
-    ChangeNotifierProvider(create: (_) => ThemeModel())
+    ChangeNotifierProvider(create: (_) => ThemeModel()),
+    ChangeNotifierProvider(create: (_) => DailyIndex())
   ];
   static List<String> DAYS = [
     'Monday',
@@ -31,6 +33,7 @@ class GLOBAL {
     'November',
     'December'
   ];
+
   static MultiProvider MAIN =
       MultiProvider(providers: PROVIDERS, child: const Main());
   static const String WEATHER_DEFAULT_REQUEST =

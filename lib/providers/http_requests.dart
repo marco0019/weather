@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:weather/utils/globals.dart';
+import '../utils/dependecies.dart';
 
 class HttpRequest with ChangeNotifier {
   late Future<Map<String, dynamic>> weather;
   HttpRequest() {
-    weather = fetchFile();
+    weather = fetchJSON();
   }
 
   Future<Map<String, dynamic>> fetchJSON() async {

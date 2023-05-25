@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import '../utils/dependecies.dart';
 
 class WeatherCard extends StatelessWidget {
   final String weatherIconUrl;
@@ -27,27 +27,31 @@ class WeatherCard extends StatelessWidget {
         onTap: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => pageRedirect)),
         borderRadius: BorderRadius.circular(20),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(precipitationProbability.toString()),
-              Lottie.asset(weatherIconUrl, width: 40, height: 40),
-              const SizedBox(width: 10),
-              Text(
-                day,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        child: Card(
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                      value: precipitationProbability / 100),
+                  const SizedBox(width: 10),
+                  Lottie.asset(weatherIconUrl, width: 40, height: 40),
+                  const SizedBox(width: 10),
+                  Text(
+                    day,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  Text(min),
+                  const SizedBox(width: 10),
+                  Text(max),
+                ],
               ),
-              const Spacer(),
-              Text(min),
-              const SizedBox(width: 10),
-              Text(max),
-            ],
-          ),
-        ),
+            )),
       );
 }
 /*

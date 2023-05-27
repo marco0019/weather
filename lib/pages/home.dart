@@ -6,13 +6,21 @@ import 'package:weather/providers/init.dart';
 import '../utils/dependecies.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final String title;
+  final double latitude;
+  final double longitude;
+  const Home(
+      {super.key,
+      required this.latitude,
+      required this.longitude,
+      required this.title});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>().weather;
@@ -37,7 +45,7 @@ class _HomeState extends State<Home> {
                         expandedTitleScale: 2,
                         //background: Container(color: Colors.pink),
                         title: Text(
-                          'M A N Z I A N A',
+                          widget.title.replaceAll('', ' ').toUpperCase(),
                           style: TextStyle(
                               color: isDarkMode ? Colors.white : Colors.black),
                         ),
@@ -55,24 +63,6 @@ class _HomeState extends State<Home> {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30),
                     )),
-                    /*SliverToBoxAdapter(
-                        child: SizedBox(
-                            height: 160,
-                            child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  for (int i = 0; i < limit; i++)
-                                    CardWeatherHorizontal(
-                                        index: i,
-                                        isCurrentDay:
-                                            dailyIndex.currentDay == i,
-                                        date:
-                                            '${GLOBAL.DAYS[DateTime.parse(value['daily']['time'][i]).weekday - 1].substring(0, 3)} ${DateTime.parse(value['daily']['time'][i]).day}',
-                                        value:
-                                            '${value['daily']['temperature_2m_min'][i]}°/${value['daily']['temperature_2m_max'][i]}°',
-                                        iconName: GLOBAL.GET_ICON_FROM_WMO_CODE(
-                                            50, false)),
-                                ]))),*/
                     SliverToBoxAdapter(
                         child: DailyListHorizontal(
                             limit: limit,
@@ -80,16 +70,20 @@ class _HomeState extends State<Home> {
                             currentIndex: dailyIndex.currentDay)),
                     const SliverToBoxAdapter(child: SizedBox(height: 50)),
                     SliverToBoxAdapter(
-                        child: HourlyList(
-                            range: 2,
-                            day: DateTime.parse(
-                                value['daily']['time'][dailyIndex.currentDay]),
-                            value: value['hourly'])),
-                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                    const SliverToBoxAdapter(
-                        child: AirQuality(
-                            currentQuality: 10, quality: [0, 12, 12])),
-                    const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                        child: SizedBox(
+                            height: 880,
+                            child: PageView.builder(
+                                onPageChanged: (indexChanged) =>
+                                    dailyIndex.setCurrentDay(indexChanged),
+                                controller: dailyIndex.controller,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: limit,
+                                itemBuilder: (context, index) => HourlyList(
+                                    range: 2,
+                                    day: DateTime.parse(
+                                        value['daily']['time'][index]),
+                                    value: value['hourly'])))),
+                    const SliverToBoxAdapter(child: SizedBox(height: 20))
                   ],
                 );
               } else if (snapshot.hasError) {

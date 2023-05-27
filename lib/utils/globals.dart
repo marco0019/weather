@@ -33,17 +33,15 @@ class GLOBAL {
   ];
 
   static MultiProvider MAIN =
-  MultiProvider(providers: PROVIDERS, child: const Main());
+      MultiProvider(providers: PROVIDERS, child: const Main());
 
   static Uri GET_OPEN_METEO_DATA(
-      {required double latitude, required double longitude}) =>
+          {required double latitude, required double longitude}) =>
       Uri.parse(
-          "${dotenv
-              .env['API_METEO_URL']}&latitude=$latitude&longitude=$longitude");
+          "${dotenv.env['API_METEO_URL']}&latitude=$latitude&longitude=$longitude");
 
   static String GET_LOCATION_FROM_TEXT(String city) =>
-      '${dotenv.env['API_LOCATION_IQ_BASE_URL']}?key=${dotenv
-          .env['API_LOCATION_IQ_KEY']}&q=$city';
+      '${dotenv.env['API_LOCATION_IQ_BASE_URL']}?key=${dotenv.env['API_LOCATION_IQ_KEY']}&q=$city';
 
   static String ANIMATION_INDENTIFIER(int index) =>
       './assets/animations/$index.json';
@@ -68,17 +66,17 @@ class GLOBAL {
 
   static Map<String, String Function(bool)> WEATHER_ICONS = {
     'chiaro': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(9) : ANIMATION_INDENTIFIER(8),
+        isDay ? ANIMATION_INDENTIFIER(9) : ANIMATION_INDENTIFIER(8),
     'nuvolo-poco': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(11) : ANIMATION_INDENTIFIER(13),
+        isDay ? ANIMATION_INDENTIFIER(11) : ANIMATION_INDENTIFIER(13),
     'pioggia': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(14) : ANIMATION_INDENTIFIER(2),
+        isDay ? ANIMATION_INDENTIFIER(14) : ANIMATION_INDENTIFIER(2),
     'tempesta': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(4) : ANIMATION_INDENTIFIER(6),
+        isDay ? ANIMATION_INDENTIFIER(4) : ANIMATION_INDENTIFIER(6),
     'nuvoloso-tanto': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(1) : ANIMATION_INDENTIFIER(10),
+        isDay ? ANIMATION_INDENTIFIER(1) : ANIMATION_INDENTIFIER(10),
     'neve': (bool isDay) =>
-    isDay ? ANIMATION_INDENTIFIER(3) : ANIMATION_INDENTIFIER(5),
+        isDay ? ANIMATION_INDENTIFIER(3) : ANIMATION_INDENTIFIER(5),
     'solo-nuvoloso': (bool isDay) => ANIMATION_INDENTIFIER(15),
     'solo-neve': (bool isDay) => ANIMATION_INDENTIFIER(7),
     'solo-tuoni': (bool isDay) => ANIMATION_INDENTIFIER(12)
@@ -89,12 +87,25 @@ class GLOBAL {
     final DateTime now = DateTime.now();
     for (int i = 0; i < limit; i++) {
       DateTime date = DateTime.parse(value['time'][i]);
-      if (now.year == date.year && now.month == date.month &&
+      if (now.year == date.year &&
+          now.month == date.month &&
           now.hour == date.hour) {
         return i;
       }
     }
     return 0;
+  }
+
+  static String CONCAT_WITH_SPLIT(String text,
+      {required List<int> include,
+      String splitChar = ',',
+      String charUnion = ', '}) {
+    final word = text.split(splitChar);
+    String phrase = '';
+    for (int index in include) {
+      phrase += word[index] + charUnion;
+    }
+    return phrase;
   }
 }
 //latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability,rain,weathercode,visibility,windspeed_10m,winddirection_10m,is_day&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin

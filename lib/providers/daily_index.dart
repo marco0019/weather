@@ -9,6 +9,13 @@ class DailyIndex with ChangeNotifier {
     notifyListeners();
   }
 
+  PageController _controller = PageController();
+  PageController get controller => _controller;
+  set controller(value) {
+    _controller = value;
+    notifyListeners();
+  }
+
   void setCurrentDay(int value) {
     currentDay = value;
     notifyListeners();

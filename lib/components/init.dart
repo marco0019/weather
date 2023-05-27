@@ -4,6 +4,8 @@ export 'card_data.dart';
 export 'card_hourly.dart';
 export 'card_weather_horizontal.dart';
 export 'chart_line.dart';
+export 'city_card.dart';
+export 'current_day.dart';
 export 'daily_list.dart';
 export 'hourly_list.dart';
 export 'change_theme.dart';

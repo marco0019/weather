@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../utils/dependecies.dart';
 
-class HttpRequest with ChangeNotifier {
+class WeatherProvider with ChangeNotifier {
   late Future<Map<String, dynamic>> weather;
-  HttpRequest() {
+
+  WeatherProvider() {
     weather = fetchJSON();
   }
 
   Future<Map<String, dynamic>> fetchJSON() async {
-    final response = await get(GLOBAL.GET_OPEN_METEO_DATA(latitude: 45.4, longitude: 12.1));
+    final response =
+        await get(GLOBAL.GET_OPEN_METEO_DATA(latitude: 45.4, longitude: 12.1));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
@@ -22,6 +25,7 @@ class HttpRequest with ChangeNotifier {
     String jsonString = await rootBundle.loadString('assets/weather.json');
     return jsonDecode(jsonString);
   }
+
   /// **This method return the list of cities from a string**</br>
   /// [LocationIQ](https://locationiq.com/docs)</br>
   Future<Map<String, dynamic>> fetchMaps(String city) async {

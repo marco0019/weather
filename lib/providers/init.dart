@@ -1,3 +1,3 @@
 export 'theme.dart';
 export 'daily_index.dart';
-export 'http_requests.dart';
+export 'weather_provider.dart';

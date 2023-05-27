@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weather/utils/dependecies.dart';
 
 class CardData extends StatelessWidget {
-  final IconData iconName;
-  final String data;
+  final String iconName;
+  final Widget data;
 
   const CardData({super.key, required this.iconName, required this.data});
 
@@ -11,11 +12,10 @@ class CardData extends StatelessWidget {
     return Column(
       children: [
         Card(
-          child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Icon(iconName, color: Colors.blue)),
+          child: Lottie.asset(iconName, width: 80, height: 80),
+          elevation: .5,
         ),
-        Text(data)
+        data
       ],
     );
   }

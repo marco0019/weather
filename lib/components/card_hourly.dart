@@ -10,6 +10,7 @@ class HourlyCard extends StatelessWidget {
   final int precipitationrobability;
   final bool isDay;
   final double rain;
+
   const HourlyCard(
       {super.key,
       required this.hour,
@@ -51,7 +52,7 @@ class HourlyCard extends StatelessWidget {
               color: Colors.blue,
             ),
             const SizedBox(width: 7),
-            Text('${rain ~/ 1000}mm'),
+            Text('$rain\mm'),
             const Spacer(),
             const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
             //const SizedBox(width: 10),

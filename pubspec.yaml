@@ -67,23 +67,24 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-      - assets/weather.json
-      - assets/animations/1.json
-      - assets/animations/2.json
-      - assets/animations/3.json
-      - assets/animations/4.json
-      - assets/animations/5.json
-      - assets/animations/6.json
-      - assets/animations/7.json
-      - assets/animations/8.json
-      - assets/animations/9.json
-      - assets/animations/10.json
-      - assets/animations/11.json
-      - assets/animations/12.json
-      - assets/animations/13.json
-      - assets/animations/14.json
-      - assets/animations/15.json
-      - .env
+    - assets/weather.json
+    - assets/icons/wind.json
+    - assets/animations/1.json
+    - assets/animations/2.json
+    - assets/animations/3.json
+    - assets/animations/4.json
+    - assets/animations/5.json
+    - assets/animations/6.json
+    - assets/animations/7.json
+    - assets/animations/8.json
+    - assets/animations/9.json
+    - assets/animations/10.json
+    - assets/animations/11.json
+    - assets/animations/12.json
+    - assets/animations/13.json
+    - assets/animations/14.json
+    - assets/animations/15.json
+    - .env
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

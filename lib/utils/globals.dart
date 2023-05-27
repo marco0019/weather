@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
+import 'package:weather/pages/init.dart';
 import 'package:weather/providers/init.dart';
 import 'dependecies.dart';
 
@@ -7,8 +9,14 @@ class GLOBAL {
   static List<SingleChildWidget> PROVIDERS = [
     ChangeNotifierProvider(create: (_) => WeatherProvider()),
     ChangeNotifierProvider(create: (_) => ThemeModel()),
-    ChangeNotifierProvider(create: (_) => DailyIndex())
+    ChangeNotifierProvider(create: (_) => DailyIndex()),
+    ChangeNotifierProvider(create: (_) => GeoLocatorProvider())
   ];
+  static Map<String, Widget Function(BuildContext)> ROUTES = {
+    '/': (context) => const SearchPlace(),
+    '/place-saved': (context) => const PlacesSaved(),
+    '/options': (context) => const Options()
+  };
   static List<String> DAYS = [
     'Monday',
     'Tuesday',
@@ -46,7 +54,6 @@ class GLOBAL {
   static String ANIMATION_INDENTIFIER(int index) =>
       './assets/animations/$index.json';
 
-//
   static String GET_ICON_FROM_WMO_CODE(int code, bool isDay) {
     if (INCLUDE(0, 3, code)) return WEATHER_ICONS['chiaro']!(isDay);
     if (INCLUDE(4, 12, code)) return WEATHER_ICONS['nuvoloso-tanto']!(isDay);

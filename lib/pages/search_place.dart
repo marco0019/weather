@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/city_card.dart';
+import 'package:weather/components/init.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependecies.dart';
 
-class ListExample extends StatefulWidget {
-  const ListExample({Key? key}) : super(key: key);
+class SearchPlace extends StatefulWidget {
+  const SearchPlace({Key? key}) : super(key: key);
 
   @override
-  State<ListExample> createState() => _ListExampleState();
+  State<SearchPlace> createState() => _SearchPlaceState();
 }
 
-class _ListExampleState extends State<ListExample> {
+class _SearchPlaceState extends State<SearchPlace> {
   final TextEditingController _controller = TextEditingController();
   List<dynamic> cities = [];
   Future<List<dynamic>> setList(
       {required WeatherProvider wp, required String city}) async {
-    final result = await wp.fetchMapsOff(city);
+    final result = await wp.fetchMaps(city);
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
     final map = context.read<WeatherProvider>();
+    //final position = context.watch<GeoLocatorProvider>();
     return Scaffold(
+        drawer: const DrawerBar(),
         appBar: AppBar(title: const Text('Prova Custom TabBar')),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -50,6 +52,7 @@ class _ListExampleState extends State<ListExample> {
                   },
                 ),
                 const SizedBox(height: 16.0),
+                //Text(position.coordinate['lat'].toString()),
                 ElevatedButton(
                   child: const Text('Invia'),
                   onPressed: () {
@@ -59,12 +62,11 @@ class _ListExampleState extends State<ListExample> {
                 ),
                 for (Map<String, dynamic> city in cities)
                   CityCard(
-                    countryCode: city['address']['country_code'],
-                    place: city['address']['name'],
-                    country: city['address']['country'],
-                    lat: double.parse(city['lat']),
-                    lon: double.parse(city['lon'])
-                  )
+                      countryCode: city['address']['country_code'],
+                      place: city['address']['name'],
+                      country: city['address']['country'],
+                      lat: double.parse(city['lat']),
+                      lon: double.parse(city['lon']))
               ],
             ),
           ),

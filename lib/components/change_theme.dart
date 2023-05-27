@@ -5,7 +5,7 @@ import 'package:weather/providers/init.dart';
 final class ChangeTheme extends StatefulWidget {
   const ChangeTheme({super.key});
   @override
-  _ChangeTheme createState() => _ChangeTheme();
+  createState() => _ChangeTheme();
 }
 
 final class _ChangeTheme extends State<ChangeTheme> {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/current_day.dart';
-import 'package:weather/components/daily_list_horizontal.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/providers/init.dart';
 import '../utils/dependecies.dart';
@@ -20,13 +18,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>().weather;
     final isDarkMode = context.watch<ThemeModel>().isDarkMode;
     final dailyIndex = context.watch<DailyIndex>();
     return Scaffold(
+        drawer: const DrawerBar(),
         body: FutureBuilder(
             future: weather,
             builder: (context, snapshot) {
@@ -39,7 +37,7 @@ class _HomeState extends State<Home> {
                       centerTitle: true,
                       pinned: true,
                       expandedHeight: 200,
-                      leading: const ChangeTheme(),
+                      //leading: const ChangeTheme(),
                       flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
                         expandedTitleScale: 2,
@@ -47,6 +45,7 @@ class _HomeState extends State<Home> {
                         title: Text(
                           widget.title.replaceAll('', ' ').toUpperCase(),
                           style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
                               color: isDarkMode ? Colors.white : Colors.black),
                         ),
                       ),

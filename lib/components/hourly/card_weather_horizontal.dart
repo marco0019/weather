@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/dependecies.dart';
+import '../../utils/dependecies.dart';
 import 'package:weather/providers/init.dart';
 
 final class CardWeatherHorizontal extends StatelessWidget {

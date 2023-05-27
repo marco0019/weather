@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/dependecies.dart';
+import '../../utils/dependecies.dart';
 
 class WeatherCard extends StatelessWidget {
   final String weatherIconUrl;

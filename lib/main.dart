@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather/pages/init.dart';
 import 'package:weather/providers/theme.dart';
 import 'utils/dependecies.dart';
 
@@ -17,7 +16,8 @@ class Main extends StatelessWidget {
         theme: ThemeData.light(useMaterial3: true),
         darkTheme: ThemeData.dark(useMaterial3: true),
         themeMode: context.watch<ThemeModel>().themeMode,
-        home: const ListExample());
+        initialRoute: '/',
+        routes: GLOBAL.ROUTES,);
   }
 }
 //https://jsonplaceholder.typicode.com/albums/1

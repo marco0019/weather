@@ -45,14 +45,14 @@ class HourlyCard extends StatelessWidget {
                 angle: 360 / windDirection,
                 child:
                     const Icon(FontAwesomeIcons.arrowDown, color: Colors.blue)),
-            Text('$windSpeed\km/h'),
+            Text('$windSpeed km/h'),
             const Spacer(),
             const Icon(
               FontAwesomeIcons.cloudRain,
               color: Colors.blue,
             ),
             const SizedBox(width: 7),
-            Text('$rain\mm'),
+            Text('$rain mm'),
             const Spacer(),
             const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
             //const SizedBox(width: 10),

@@ -2,5 +2,5 @@
 export 'home.dart';
 export 'hourly_page.dart';
 export 'search_place.dart';
-export 'options.dart';
+export 'settings.dart';
 export 'places_saved.dart';

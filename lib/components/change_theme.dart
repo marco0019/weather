@@ -12,7 +12,6 @@ final class _ChangeTheme extends State<ChangeTheme> {
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
-      // Thumb icon when the switch is selected.
       if (states.contains(MaterialState.selected)) {
         return const Icon(FontAwesomeIcons.moon);
       }

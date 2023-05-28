@@ -7,11 +7,13 @@ class Home extends StatefulWidget {
   final String title;
   final double latitude;
   final double longitude;
+  final String countryCode;
   const Home(
       {super.key,
       required this.latitude,
       required this.longitude,
-      required this.title});
+      required this.title,
+      required this.countryCode});
 
   @override
   State<Home> createState() => _HomeState();
@@ -20,13 +22,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final weather = context.watch<WeatherProvider>().weather;
+    final weather = context.watch<WeatherProvider>();
     final isDarkMode = context.watch<ThemeModel>().isDarkMode;
     final dailyIndex = context.watch<DailyIndex>();
     return Scaffold(
         drawer: const DrawerBar(),
         body: FutureBuilder(
-            future: weather,
+            future: weather.fetchWeather(
+                latitude: widget.latitude, longitude: widget.longitude),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 var value = Map<String, dynamic>.from(snapshot.data as Map);
@@ -86,9 +89,10 @@ class _HomeState extends State<Home> {
                   ],
                 );
               } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+                return Center(child: Text('${snapshot.error}'));
               }
-              return const LinearProgressIndicator();
+              return Center(child: Lottie.asset('assets/loadings/1.json'));
+              //return const LinearProgressIndicator();
             }));
   }
 }

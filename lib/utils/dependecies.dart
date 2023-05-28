@@ -6,5 +6,5 @@ export 'package:lottie/lottie.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:fl_chart/fl_chart.dart';
 export 'package:flag/flag.dart';
-export 'package:geolocator/geolocator.dart';
+//export 'package:geolocator/geolocator.dart';
 export 'globals.dart';

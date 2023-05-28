@@ -9,6 +9,16 @@ class WeatherProvider with ChangeNotifier {
   WeatherProvider() {
     weather = fetchJSON();
   }
+  Future<Map<String, dynamic>> fetchWeather(
+      {required double latitude, required double longitude}) async {
+    final response = await get(
+        GLOBAL.GET_OPEN_METEO_DATA(latitude: latitude, longitude: longitude));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load weather');
+    }
+  }
 
   Future<Map<String, dynamic>> fetchJSON() async {
     final response =
@@ -35,7 +45,8 @@ class WeatherProvider with ChangeNotifier {
       throw Exception('Failed to load cities');
     }
   }
-  Future<List<dynamic>> fetchMapsOff(String city) async{
+
+  Future<List<dynamic>> fetchMapsOff(String city) async {
     String jsonString = await rootBundle.loadString('assets/city.json');
     return jsonDecode(jsonString);
   }

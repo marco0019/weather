@@ -16,7 +16,7 @@ class Main extends StatelessWidget {
         theme: ThemeData.light(useMaterial3: true),
         darkTheme: ThemeData.dark(useMaterial3: true),
         themeMode: context.watch<ThemeModel>().themeMode,
-        initialRoute: '/',
+        initialRoute: '/search',
         routes: GLOBAL.ROUTES,);
   }
 }

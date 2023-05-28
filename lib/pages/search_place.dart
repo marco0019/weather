@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
+import 'package:weather/components/random_loading.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependecies.dart';
 
-class SearchPlace extends StatefulWidget {
+final class SearchPlace extends StatefulWidget {
   const SearchPlace({Key? key}) : super(key: key);
 
   @override
@@ -13,10 +14,20 @@ class SearchPlace extends StatefulWidget {
 class _SearchPlaceState extends State<SearchPlace> {
   final TextEditingController _controller = TextEditingController();
   List<dynamic> cities = [];
-  Future<List<dynamic>> setList(
+  String error = '';
+  bool? isLoading;
+
+  Future<void> setList(
       {required WeatherProvider wp, required String city}) async {
-    final result = await wp.fetchMaps(city);
-    return result;
+    try {
+      setState(() => isLoading = true);
+      final result = await wp.fetchMaps(city);
+      setState(() => cities = result);
+      setState(() => isLoading = false);
+    } on Exception catch (err) {
+      debugPrint(err.toString());
+      setState(() => error = err.toString());
+    }
   }
 
   @override
@@ -24,42 +35,50 @@ class _SearchPlaceState extends State<SearchPlace> {
     final map = context.read<WeatherProvider>();
     //final position = context.watch<GeoLocatorProvider>();
     return Scaffold(
-        drawer: const DrawerBar(),
-        appBar: AppBar(title: const Text('Prova Custom TabBar')),
-        body: Padding(
+      drawer: const DrawerBar(),
+      appBar: AppBar(title: const Text('Search')),
+      body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
-            child: ListView(
-              children: [
-                TextFormField(
-                  controller: _controller,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter a city or any place...',
-                    labelText: 'City',
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.red, // Cambia il colore del bordo
-                          width: 2.0, // Cambia lo spessore del bordo
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(4))),
-                    contentPadding: EdgeInsets.all(15),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Il campo non può essere vuoto';
-                    }
-                    return null;
-                  },
+            child: ListView(children: [
+              TextFormField(
+                controller: _controller,
+                decoration: const InputDecoration(
+                  hintText: 'Enter a city or any place...',
+                  labelText: 'City',
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red, // Cambia il colore del bordo
+                        width: 2.0, // Cambia lo spessore del bordo
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(4))),
+                  contentPadding: EdgeInsets.all(15),
                 ),
-                const SizedBox(height: 16.0),
-                //Text(position.coordinate['lat'].toString()),
-                ElevatedButton(
-                  child: const Text('Invia'),
-                  onPressed: () {
-                    setList(wp: map, city: _controller.text)
-                        .then((value) => setState(() => cities = value));
-                  },
-                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Il campo non può essere vuoto';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              //Text(position.coordinate['lat'].toString()),
+              ElevatedButton(
+                child: const Text('Invia'),
+                onPressed: () => _controller.text == ''
+                    ? null
+                    : setList(wp: map, city: _controller.text),
+              ),
+              if (error != '')
+                Text(error)
+              else if (isLoading == null)
+                const RandomLoading(
+                    description: 'Non hai ancora cercato nessuno luogo')
+              else if (isLoading!)
+                const RandomLoading(
+                  description: 'Sto caricando...',
+                )
+              else
                 for (Map<String, dynamic> city in cities)
                   CityCard(
                       countryCode: city['address']['country_code'],
@@ -67,10 +86,9 @@ class _SearchPlaceState extends State<SearchPlace> {
                       country: city['address']['country'],
                       lat: double.parse(city['lat']),
                       lon: double.parse(city['lon']))
-              ],
-            ),
-          ),
-        ));
+            ]),
+          )),
+    );
   }
 }
 /*

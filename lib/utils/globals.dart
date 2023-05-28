@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
@@ -6,16 +8,17 @@ import 'package:weather/providers/init.dart';
 import 'dependecies.dart';
 
 class GLOBAL {
+  static Random RAND = Random();
   static List<SingleChildWidget> PROVIDERS = [
     ChangeNotifierProvider(create: (_) => WeatherProvider()),
     ChangeNotifierProvider(create: (_) => ThemeModel()),
     ChangeNotifierProvider(create: (_) => DailyIndex()),
-    ChangeNotifierProvider(create: (_) => GeoLocatorProvider())
+    //ChangeNotifierProvider(create: (_) => GeoLocatorProvider())
   ];
   static Map<String, Widget Function(BuildContext)> ROUTES = {
-    '/': (context) => const SearchPlace(),
+    '/search': (context) => const SearchPlace(),
     '/place-saved': (context) => const PlacesSaved(),
-    '/options': (context) => const Options()
+    '/settings': (context) => const Settings()
   };
   static List<String> DAYS = [
     'Monday',
@@ -103,6 +106,8 @@ class GLOBAL {
     return 0;
   }
 
+  static String GET_RANDOM_LOADING_ANIMATION() =>
+      'assets/loadings/${RAND.nextInt(5) + 1}.json';
   static String CONCAT_WITH_SPLIT(String text,
       {required List<int> include,
       String splitChar = ',',

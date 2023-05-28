@@ -1,4 +1,3 @@
-export 'air_quality.dart';
 export 'daily/card_daily.dart';
 export 'card_data.dart';
 export 'hourly/card_hourly.dart';

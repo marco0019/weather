@@ -29,6 +29,7 @@ class CityCard extends StatelessWidget {
                         title: place,
                         latitude: lat,
                         longitude: lon,
+                        countryCode: countryCode,
                       )));
         },
         child: Container(

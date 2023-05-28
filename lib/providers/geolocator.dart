@@ -1,6 +1,6 @@
 /*
 import 'package:flutter/material.dart';
-import '../utils/dependecies.dart';
+import '../utils/dependencies.dart';
 class GeoLocatorProvider with ChangeNotifier {
   Map<String, double> coordinate = {'lat': 0, 'lon': 0};
   GeoLocatorProvider() {

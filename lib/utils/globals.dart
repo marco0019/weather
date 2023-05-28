@@ -5,7 +5,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
 import 'package:weather/pages/init.dart';
 import 'package:weather/providers/init.dart';
-import 'dependecies.dart';
+import 'dependencies.dart';
 
 class GLOBAL {
   static Random RAND = Random();
@@ -13,12 +13,15 @@ class GLOBAL {
     ChangeNotifierProvider(create: (_) => WeatherProvider()),
     ChangeNotifierProvider(create: (_) => ThemeModel()),
     ChangeNotifierProvider(create: (_) => DailyIndex()),
+    ChangeNotifierProvider(create: (_) => DrawerProvider())
     //ChangeNotifierProvider(create: (_) => GeoLocatorProvider())
   ];
+  static List<String> PAGES = ['/search', '/place-saved', '/settings'];
   static Map<String, Widget Function(BuildContext)> ROUTES = {
     '/search': (context) => const SearchPlace(),
     '/place-saved': (context) => const PlacesSaved(),
-    '/settings': (context) => const Settings()
+    '/settings': (context) => const Settings(),
+    // '/chart': (context) => const ExamplePage()
   };
   static List<String> DAYS = [
     'Monday',
@@ -46,13 +49,33 @@ class GLOBAL {
   static MultiProvider MAIN =
       MultiProvider(providers: PROVIDERS, child: const Main());
 
-  static Uri GET_OPEN_METEO_DATA(
-          {required double latitude, required double longitude}) =>
-      Uri.parse(
-          "${dotenv.env['API_METEO_URL']}&latitude=$latitude&longitude=$longitude");
-
-  static String GET_LOCATION_FROM_TEXT(String city) =>
-      '${dotenv.env['API_LOCATION_IQ_BASE_URL']}?key=${dotenv.env['API_LOCATION_IQ_KEY']}&q=$city';
+  static Map<String, dynamic> GET_IQA_INFO(int code) {
+    if (INCLUDE(0, 50, code)) {
+      return {
+        'color': Colors.green,
+        'label': 'GOOD',
+      };
+    }
+    if (INCLUDE(51, 100, code)) {
+      return {'color': Colors.yellowAccent, 'label': 'MODERATA'};
+    }
+    if (INCLUDE(101, 150, code)) {
+      return {
+        'color': Colors.orange,
+        'label': 'INSALUBRE PER GRUPPI SENSIBILI'
+      };
+    }
+    if (INCLUDE(151, 200, code)) {
+      return {'color': Colors.red, 'label': 'INSALUBRE'};
+    }
+    if (INCLUDE(201, 300, code)) {
+      return {'color': Colors.purple, 'label': 'MOLTO INSALUBRE'};
+    }
+    return {
+      'color': const Color.fromRGBO(65, 0, 0, 100),
+      'label': 'PERICOLOSA'
+    };
+  }
 
   static String ANIMATION_INDENTIFIER(int index) =>
       './assets/animations/$index.json';
@@ -108,6 +131,7 @@ class GLOBAL {
 
   static String GET_RANDOM_LOADING_ANIMATION() =>
       'assets/loadings/${RAND.nextInt(5) + 1}.json';
+
   static String CONCAT_WITH_SPLIT(String text,
       {required List<int> include,
       String splitChar = ',',
@@ -118,6 +142,21 @@ class GLOBAL {
       phrase += word[index] + charUnion;
     }
     return phrase;
+  }
+
+  static double GET_AVERAGE_FROM_HOURLY_DATA(
+      DateTime ref, List<DateTime> dates, List<double> values) {
+    double sum = 0;
+    int length = 0;
+    for (int i = 0; i < dates.length; i++) {
+      if (dates[i].year == ref.year &&
+          dates[i].month == ref.month &&
+          dates[i].day == ref.day) {
+        sum += values[i];
+        length++;
+      }
+    }
+    return sum / length;
   }
 }
 //latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability,rain,weathercode,visibility,windspeed_10m,winddirection_10m,is_day&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin

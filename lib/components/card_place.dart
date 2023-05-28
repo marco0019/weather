@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weather/utils/dependecies.dart';
+import 'package:weather/utils/dependencies.dart';
 
 class CardPlace extends StatelessWidget {
   final String countryCode;
   final String place;
+
   const CardPlace({super.key, required this.countryCode, required this.place});
 
   @override

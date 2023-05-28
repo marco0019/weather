@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../utils/dependecies.dart';
+import '../utils/dependencies.dart';
 import 'package:weather/providers/init.dart';
 
 final class ChangeTheme extends StatefulWidget {
   const ChangeTheme({super.key});
+
   @override
   createState() => _ChangeTheme();
 }
@@ -18,6 +19,7 @@ final class _ChangeTheme extends State<ChangeTheme> {
       return const Icon(FontAwesomeIcons.sun);
     },
   );
+
   @override
   Widget build(BuildContext context) {
     final theme = context.watch<ThemeModel>();

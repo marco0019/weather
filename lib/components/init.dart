@@ -2,7 +2,7 @@ export 'daily/card_daily.dart';
 export 'card_data.dart';
 export 'hourly/card_hourly.dart';
 export 'hourly/card_weather_horizontal.dart';
-export 'chart_line.dart';
+export 'charts/chart_line.dart';
 export 'city_card.dart';
 export 'daily/current_day.dart';
 export 'daily/daily_list.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/providers/theme.dart';
-import 'utils/dependecies.dart';
+import 'utils/dependencies.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -13,11 +13,12 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData.light(useMaterial3: true),
-        darkTheme: ThemeData.dark(useMaterial3: true),
-        themeMode: context.watch<ThemeModel>().themeMode,
-        initialRoute: '/search',
-        routes: GLOBAL.ROUTES,);
+      theme: ThemeData.light(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: context.watch<ThemeModel>().themeMode,
+      initialRoute: '/search',
+      routes: GLOBAL.ROUTES,
+    );
   }
 }
 //https://jsonplaceholder.typicode.com/albums/1

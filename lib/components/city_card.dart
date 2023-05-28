@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/pages/init.dart';
-import '../utils/dependecies.dart';
+import '../utils/dependencies.dart';
 
 class CityCard extends StatelessWidget {
   final String countryCode;
@@ -8,13 +8,16 @@ class CityCard extends StatelessWidget {
   final String place;
   final double lat;
   final double lon;
+  final String timezone;
+
   const CityCard(
       {super.key,
       required this.countryCode,
       required this.place,
       required this.country,
       required this.lat,
-      required this.lon});
+      required this.lon,
+      required this.timezone});
 
   @override
   Widget build(BuildContext context) {

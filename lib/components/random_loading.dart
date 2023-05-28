@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/utils/dependecies.dart';
+import 'package:weather/utils/dependencies.dart';
 
 class RandomLoading extends StatelessWidget {
   final String description;

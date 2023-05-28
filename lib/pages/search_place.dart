@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/components/random_loading.dart';
 import 'package:weather/providers/init.dart';
-import 'package:weather/utils/dependecies.dart';
+import 'package:weather/utils/dependencies.dart';
 
 final class SearchPlace extends StatefulWidget {
   const SearchPlace({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ final class SearchPlace extends StatefulWidget {
 
 class _SearchPlaceState extends State<SearchPlace> {
   final TextEditingController _controller = TextEditingController();
-  List<dynamic> cities = [];
+  Map<String, dynamic> cities = {};
   String error = '';
   bool? isLoading;
 
@@ -21,7 +21,7 @@ class _SearchPlaceState extends State<SearchPlace> {
       {required WeatherProvider wp, required String city}) async {
     try {
       setState(() => isLoading = true);
-      final result = await wp.fetchMaps(city);
+      final result = await wp.fetchMapsGeoCoding(city);
       setState(() => cities = result);
       setState(() => isLoading = false);
     } on Exception catch (err) {
@@ -83,13 +83,15 @@ class _SearchPlaceState extends State<SearchPlace> {
                   description: 'Sto mandando la richiesta al server...',
                 )
               else
-                for (Map<String, dynamic> city in cities)
+                for (Map<String, dynamic> city
+                    in cities['results'] as List<dynamic>)
                   CityCard(
-                      countryCode: city['address']['country_code'],
-                      place: city['address']['name'],
-                      country: city['address']['country'],
-                      lat: double.parse(city['lat']),
-                      lon: double.parse(city['lon']))
+                      timezone: city['timezone'],
+                      countryCode: city['country_code'],
+                      place: city['name'],
+                      country: city['country'],
+                      lat: city['latitude'],
+                      lon: city['longitude'])
             ]),
           )),
     );

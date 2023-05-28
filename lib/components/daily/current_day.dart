@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:weather/components/card_data.dart';
-import 'package:weather/utils/dependecies.dart';
+import 'package:weather/utils/dependencies.dart';
 
 class CurrentDay extends StatelessWidget {
   final Map<String, dynamic> info;

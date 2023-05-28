@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/providers/init.dart';
-import 'package:weather/utils/dependecies.dart';
+import 'package:weather/utils/dependencies.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -25,7 +25,6 @@ class _SettingsState extends State<Settings> {
               //leading: const ChangeTheme(),
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
-                expandedTitleScale: 2,
                 //background: Container(color: Colors.pink),
                 title: Text(
                   'S E T T I N G S',
@@ -35,19 +34,30 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(child: ListTile(
+            const SliverToBoxAdapter(
+                child: ListTile(
               leading: Icon(FontAwesomeIcons.yinYang),
               title: Text('Theme'),
               trailing: ChangeTheme(),
             )),
-            const SliverToBoxAdapter(child: ListTile(
+            const SliverToBoxAdapter(
+                child: ListTile(
               leading: Icon(FontAwesomeIcons.circleQuestion),
               title: Text('Help'),
               subtitle: Text('Help centre, contact us, privacy policy'),
               trailing: ChangeTheme(),
             )),
-            const SliverToBoxAdapter(child: 
-            Text('from', textAlign: TextAlign.center,)),
+            const SliverToBoxAdapter(
+                child: Text(
+              'from',
+              textAlign: TextAlign.center,
+            )),
+            const SliverToBoxAdapter(
+                child: ListTile(
+              leading: Icon(FontAwesomeIcons.globe),
+              title: Text('App languange'),
+              subtitle: Text('English'),
+            ))
           ],
         ));
   }

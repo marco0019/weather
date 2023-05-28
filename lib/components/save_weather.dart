@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,26 +14,45 @@ class SaveWeather extends StatefulWidget {
 
 class _SaveWeatherState extends State<SaveWeather>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  AnimationController? _animationController;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    _animationController = AnimationController(vsync: this);
   }
 
   @override
   void dispose() {
+    _animationController?.dispose();
     super.dispose();
-    _controller.dispose();
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Lottie.asset(controller: _controller, 'assets/icons/star.json',
-          onLoaded: (animation) {
-        _controller
-          ..duration = animation.duration
-          ..repeat(reverse: false);
-      });
+  Widget build(BuildContext context) {
+    bool isPlaying = _animationController!.isAnimating;
+
+    return Column(
+      children: [
+        Lottie.asset(
+          'assets/icons/star.json',
+          height: 200,
+          width: 200,
+          controller: _animationController!,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              if (isPlaying) {
+                _animationController!.stop();
+              } else {
+                _animationController!.repeat();
+              }
+            });
+          },
+          child: Text(isPlaying ? 'Stop Animation' : 'Start Animation'),
+        ),
+      ],
+    );
+  }
 }

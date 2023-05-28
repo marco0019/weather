@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/pages/init.dart';
-import '../../utils/dependecies.dart';
+import '../../utils/dependencies.dart';
 
 final class DailyList extends StatelessWidget {
   final int limit;
   final Map<String, dynamic> value;
+
   const DailyList({super.key, required this.limit, required this.value});
+
   @override
   Widget build(BuildContext context) {
     return Card(

@@ -8,6 +8,7 @@ class Home extends StatefulWidget {
   final double latitude;
   final double longitude;
   final String countryCode;
+
   const Home(
       {super.key,
       required this.latitude,
@@ -37,6 +38,12 @@ class _HomeState extends State<Home> {
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
+                      actions: [
+                        SaveWeather(
+                            place: widget.title,
+                            lat: widget.latitude,
+                            lon: widget.longitude)
+                      ],
                       centerTitle: true,
                       pinned: true,
                       expandedHeight: 200,

@@ -34,6 +34,9 @@ flutter:
     - assets/weather.json
     - assets/city.json
     - assets/icons/wind.json
+    - assets/icons/water.json
+    - assets/icons/rain.json
+    - assets/icons/star.json
     - assets/animations/1.json
     - assets/animations/2.json
     - assets/animations/3.json

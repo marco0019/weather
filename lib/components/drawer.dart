@@ -31,6 +31,13 @@ class DrawerBar extends StatelessWidget {
                 Navigator.pushNamed(context, '/search');
               }),
           ListTile(
+              leading: const Icon(Icons.timer),
+              title: const Text('Recently places'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/search');
+              }),
+          ListTile(
             leading: const Icon(FontAwesomeIcons.gear),
             title: const Text('Settings'),
             onTap: () {

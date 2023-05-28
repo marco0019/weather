@@ -30,11 +30,11 @@ class CurrentDay extends StatelessWidget {
             data: Text('${info['windspeed_10m'][index]}km/h')),
         const Spacer(),
         CardData(
-            iconName: 'assets/icons/wind.json',
-            data: Text('${info['visibility'][index]}m')),
+            iconName: 'assets/icons/rain.json',
+            data: Text('${info['precipitation'][index]}m')),
         const Spacer(),
         CardData(
-            iconName: 'assets/icons/wind.json',
+            iconName: 'assets/icons/water.json',
             data: Text('${info['precipitation_probability'][index]}%')),
         const Spacer(),
       ])

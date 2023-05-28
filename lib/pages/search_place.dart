@@ -41,26 +41,28 @@ class _SearchPlaceState extends State<SearchPlace> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             child: ListView(children: [
-              TextFormField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  hintText: 'Enter a city or any place...',
-                  labelText: 'City',
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red, // Cambia il colore del bordo
-                        width: 2.0, // Cambia lo spessore del bordo
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                  contentPadding: EdgeInsets.all(15),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Il campo non può essere vuoto';
-                  }
-                  return null;
-                },
-              ),
+              Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter a city or any place...',
+                      labelText: 'City',
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.red, // Cambia il colore del bordo
+                            width: 2.0, // Cambia lo spessore del bordo
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                      contentPadding: EdgeInsets.all(15),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Il campo non può essere vuoto';
+                      }
+                      return null;
+                    },
+                  )),
               const SizedBox(height: 16.0),
               //Text(position.coordinate['lat'].toString()),
               ElevatedButton(
@@ -73,10 +75,12 @@ class _SearchPlaceState extends State<SearchPlace> {
                 Text(error)
               else if (isLoading == null)
                 const RandomLoading(
+                    title: 'Cerca un luogo...',
                     description: 'Non hai ancora cercato nessuno luogo')
               else if (isLoading!)
                 const RandomLoading(
-                  description: 'Sto caricando...',
+                  title: 'Caricamento...',
+                  description: 'Sto mandando la richiesta al server...',
                 )
               else
                 for (Map<String, dynamic> city in cities)

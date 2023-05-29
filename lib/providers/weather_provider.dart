@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/dependencies.dart';
 
 class WeatherProvider with ChangeNotifier {
-  String title = 'manziana';
+  String title = 'placeholder';
   String countryCode = 'it';
   double latitude = 42;
   double longitude = 12;

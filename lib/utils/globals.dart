@@ -149,5 +149,65 @@ class GLOBAL {
     }
     return sum / length;
   }
+
+  static List<String> AIR_STATES = [
+    'Good',
+    'Fair',
+    'Moderate',
+    'Poor',
+    'Very poor',
+    'Extremely poor'
+  ];
+
+  static String GET_WIND_DIRECTION(int angle) => [
+        'N',
+        'NNE',
+        'NE',
+        'ENE',
+        'E',
+        'ESE',
+        'SE',
+        'SSE',
+        'S',
+        'SSW',
+        'SW',
+        'WSW',
+        'W',
+        'WNW',
+        'NW'
+      ][(angle ~/ 22.5) % 15];
+  static List<Color> AIR_QUALITY_COLORS = [
+    Colors.lightBlueAccent,
+    Colors.green,
+    Colors.yellow,
+    Colors.deepOrangeAccent,
+    Colors.red,
+    Colors.deepPurple
+  ];
+
+  static List<int> GET_QUALITY_OF_AIR(List<int> values) {
+    final List<int> result = [];
+    final indexes = [
+      [0, 10, 20, 25, 50, 75, 800], // pm25
+      [0, 20, 40, 50, 100, 150, 1200], // pm10
+      [0, 40, 90, 120, 230, 340, 1000], //NO2
+      [0, 50, 100, 130, 240, 380, 800], //O3
+      [0, 100, 200, 350, 500, 750, 1250] //SO2
+    ];
+    for (int i = 0; i < values.length; i++) {
+      result.add(GET_LAST_INDEX(indexes[i], values[i]));
+    }
+    int sum = 0;
+    for (int item in result) sum += item;
+    result.add(sum ~/ values.length);
+    return result;
+  }
+
+  static int GET_LAST_INDEX(List<int> list, int target) {
+    for (int i = 0; i < list.length; i++) {
+      if (list[i] >= target) return i - 1;
+    }
+    return 0;
+  }
 }
 //latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability,rain,weathercode,visibility,windspeed_10m,winddirection_10m,is_day&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin

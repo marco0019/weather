@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather/pages/esempi.dart';
 import 'package:weather/pages/frame.dart';
+import 'package:weather/pages/init.dart';
 import 'package:weather/providers/theme.dart';
 import 'utils/dependencies.dart';
 
@@ -15,7 +17,8 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true), //ThemeData.dark(useMaterial3: true)
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      //ThemeData.dark(useMaterial3: true)
       themeMode: context.watch<ThemeModel>().themeMode,
       home: const Frame(),
     );

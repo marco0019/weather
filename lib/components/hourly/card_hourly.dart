@@ -32,8 +32,7 @@ class HourlyCard extends StatelessWidget {
             onTap: () => showModalBottomSheet<void>(
                 showDragHandle: true,
                 context: context,
-                builder: (BuildContext context) => const SizedBox(
-                    height: 200, child: Center(child: HourlyInfo()))),
+                builder: (BuildContext context) => const Text('placeholder')),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(children: [

@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:weather/components/air_quality.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/providers/init.dart';
+import '../../components/segmented_button.dart';
 import '../../utils/dependencies.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
@@ -60,7 +56,9 @@ class _HomeState extends State<Home> {
                         limit: limit,
                         value: value['daily'],
                         currentIndex: dailyIndex.currentDay)),
-                const SliverToBoxAdapter(child: SizedBox(height: 50)),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                const SliverToBoxAdapter(child: SingleChoice()),
+                const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                     child: SizedBox(
                         height: 860,
@@ -71,7 +69,7 @@ class _HomeState extends State<Home> {
                             scrollDirection: Axis.horizontal,
                             itemCount: limit,
                             itemBuilder: (context, index) => HourlyList(
-                                range: 2,
+                                range: dailyIndex.range,
                                 day: DateTime.parse(
                                     value['daily']['time'][index]),
                                 value: value['hourly'])))),

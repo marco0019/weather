@@ -15,7 +15,7 @@ class AirQuality extends StatelessWidget {
     final weather = context.watch<WeatherProvider>();
     return Card(
         child: Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
       child: FutureBuilder(
         future: weather.fetchAirQuality(lat: latitude, lon: longitude),
         builder: (context, snapshot) {
@@ -42,7 +42,7 @@ class AirQuality extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Column(children: [
+              const Column(children: [
                 Text('prova1'),
                 Text('prova1'),
                 Text('prova1'),

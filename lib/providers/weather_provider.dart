@@ -4,7 +4,23 @@ import 'package:flutter/material.dart';
 import '../utils/dependencies.dart';
 
 class WeatherProvider with ChangeNotifier {
-  //late Future<Map<String, dynamic>> weather;
+  String title = 'manziana';
+  String countryCode = 'it';
+  double latitude = 42;
+  double longitude = 12;
+  late Future<Map<String, dynamic>> weather;
+
+  void setData(
+      {required String ti,
+      required String cCode,
+      required double lat,
+      required double lon}) {
+    title = ti;
+    countryCode = cCode;
+    latitude = lat;
+    longitude = lon;
+    notifyListeners();
+  }
 
   Future<Map<String, dynamic>> fetchWeather(
       {required double latitude, required double longitude}) async {

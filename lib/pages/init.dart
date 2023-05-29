@@ -1,7 +1,6 @@
 // Files
-export 'home.dart';
-export 'hourly_page.dart';
-export 'search_place.dart';
-export 'settings.dart';
-export 'places_saved.dart';
-export 'recently_places.dart';
+export 'tabs/home.dart';
+export '../unused/hourly_page.dart';
+export 'tabs/search_place.dart';
+export 'tabs/settings.dart';
+export 'tabs/places_saved.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DailyIndex with ChangeNotifier {
-  DailyIndex();
+class HomeProvider with ChangeNotifier {
   int _currentDay = 0;
   int get currentDay => _currentDay;
   set currentDay(value) {

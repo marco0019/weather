@@ -15,7 +15,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeModel>().isDarkMode;
     return Scaffold(
-        drawer: const DrawerBar(),
+      //bottomNavigationBar: const BottomCustomBar(),
         body: CustomScrollView(
           slivers: [
             SliverAppBar(

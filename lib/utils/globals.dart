@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
-import 'package:weather/pages/init.dart';
 import 'package:weather/providers/init.dart';
 import 'dependencies.dart';
 
@@ -12,17 +11,9 @@ class GLOBAL {
   static List<SingleChildWidget> PROVIDERS = [
     ChangeNotifierProvider(create: (_) => WeatherProvider()),
     ChangeNotifierProvider(create: (_) => ThemeModel()),
-    ChangeNotifierProvider(create: (_) => DailyIndex()),
-    ChangeNotifierProvider(create: (_) => DrawerProvider())
-    //ChangeNotifierProvider(create: (_) => GeoLocatorProvider())
+    ChangeNotifierProvider(create: (_) => HomeProvider()),
+    ChangeNotifierProvider(create: (_) => MenuProvider())
   ];
-  static List<String> PAGES = ['/search', '/place-saved', '/settings'];
-  static Map<String, Widget Function(BuildContext)> ROUTES = {
-    '/search': (context) => const SearchPlace(),
-    '/place-saved': (context) => const PlacesSaved(),
-    '/settings': (context) => const Settings(),
-    // '/chart': (context) => const ExamplePage()
-  };
   static List<String> DAYS = [
     'Monday',
     'Tuesday',

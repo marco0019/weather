@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
-import 'package:weather/components/random_loading.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
@@ -21,7 +20,7 @@ class _SearchPlaceState extends State<SearchPlace> {
       {required WeatherProvider wp, required String city}) async {
     try {
       setState(() => isLoading = true);
-      final result = await wp.fetchMapsGeoCoding(city);
+      final result = await wp.fetchMapsGeoCoding(city.trim());
       setState(() => cities = result);
       setState(() => isLoading = false);
     } on Exception catch (err) {
@@ -33,27 +32,21 @@ class _SearchPlaceState extends State<SearchPlace> {
   @override
   Widget build(BuildContext context) {
     final map = context.read<WeatherProvider>();
-    //final position = context.watch<GeoLocatorProvider>();
     return Scaffold(
-      drawer: const DrawerBar(),
+      //bottomNavigationBar: const BottomCustomBar(),
       appBar: AppBar(title: const Text('Search')),
       body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
             child: ListView(children: [
               Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: TextFormField(
                     controller: _controller,
                     decoration: const InputDecoration(
                       hintText: 'Enter a city or any place...',
-                      labelText: 'City',
                       border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red, // Cambia il colore del bordo
-                            width: 2.0, // Cambia lo spessore del bordo
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                          borderRadius: BorderRadius.all(Radius.circular(0))),
                       contentPadding: EdgeInsets.all(15),
                     ),
                     validator: (value) {
@@ -64,7 +57,6 @@ class _SearchPlaceState extends State<SearchPlace> {
                     },
                   )),
               const SizedBox(height: 16.0),
-              //Text(position.coordinate['lat'].toString()),
               ElevatedButton(
                 child: const Text('Invia'),
                 onPressed: () => _controller.text == ''

@@ -12,7 +12,6 @@ class CardData extends StatelessWidget {
     return Column(
       children: [
         Card(
-          elevation: .5,
           child: Lottie.asset(iconName, width: 80, height: 80),
         ),
         data

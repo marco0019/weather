@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather/pages/init.dart';
-import '../utils/dependencies.dart';
+import 'package:weather/providers/init.dart';
+import 'package:weather/utils/dependencies.dart';
 
 class CityCard extends StatelessWidget {
   final String countryCode;
@@ -21,39 +21,34 @@ class CityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final weather = context.read<WeatherProvider>();
+    final menu = context.read<MenuProvider>();
     return InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         onTap: () {
-          debugPrint('dvdfv');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Home(
-                        title: place,
-                        latitude: lat,
-                        longitude: lon,
-                        countryCode: countryCode,
-                      )));
+          weather.setData(ti: place, cCode: countryCode, lat: lat, lon: lon);
+          menu.setIndex(0);
         },
         child: Container(
             padding: const EdgeInsets.all(10),
             child: Row(
               children: [
-                Flag.fromString(
-                  countryCode,
-                  width: 30,
-                  height: 30,
-                  borderRadius: 15,
-                  fit: BoxFit.cover,
-                ),
+                ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    child: Image.asset(
+                        'icons/flags/png/${countryCode.trim().toLowerCase()}.png',
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.cover,
+                        package: 'country_icons')),
                 const SizedBox(width: 10),
                 Expanded(
                     child: Text('$place, $country',
                         overflow: TextOverflow.ellipsis, maxLines: 1)),
-                const Spacer(),
-                Text('${lat ~/ 1}° E'),
+                //const Spacer(),
+                Text('${lat ~/ 1}° E', textAlign: TextAlign.end),
                 const SizedBox(width: 10),
-                Text('${lon ~/ 1}° N')
+                Text('${lon ~/ 1}° N', textAlign: TextAlign.end)
               ],
             )));
   }

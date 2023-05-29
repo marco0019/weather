@@ -5,6 +5,6 @@ export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:lottie/lottie.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:fl_chart/fl_chart.dart';
-export 'package:flag/flag.dart';
+export 'package:country_icons/country_icons.dart';
 //export 'package:geolocator/geolocator.dart';
 export 'globals.dart';

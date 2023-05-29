@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/components/hourly/info_hourly.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class HourlyCard extends StatelessWidget {
@@ -26,39 +27,46 @@ class HourlyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         elevation: .5,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(children: [
-            Text(hour.toString()),
-            const SizedBox(width: 10),
-            Lottie.asset(GLOBAL.GET_ICON_FROM_WMO_CODE(weathercode, isDay),
-                width: 40, height: 40),
-            const SizedBox(width: 10),
-            Text('$temperature°'),
-            const VerticalDivider(
-              color: Colors.black,
-              thickness: 10,
-              width: 10,
-            ),
-            const Spacer(),
-            Transform.rotate(
-                angle: 360 / windDirection,
-                child:
-                    const Icon(FontAwesomeIcons.arrowDown, color: Colors.blue)),
-            Text('$windSpeed km/h'),
-            const Spacer(),
-            const Icon(
-              FontAwesomeIcons.cloudRain,
-              color: Colors.blue,
-            ),
-            const SizedBox(width: 7),
-            Text('$rain mm'),
-            const Spacer(),
-            const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
-            //const SizedBox(width: 10),
-            Text('$precipitationrobability%'),
-            const Spacer()
-          ]),
-        ));
+        child: InkWell(
+            enableFeedback: false,
+            onTap: () => showModalBottomSheet<void>(
+                showDragHandle: true,
+                context: context,
+                builder: (BuildContext context) => const SizedBox(
+                    height: 200, child: Center(child: HourlyInfo()))),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(children: [
+                Text(hour.toString()),
+                const SizedBox(width: 10),
+                Lottie.asset(GLOBAL.GET_ICON_FROM_WMO_CODE(weathercode, isDay),
+                    width: 40, height: 40),
+                const SizedBox(width: 10),
+                Text('$temperature°'),
+                const VerticalDivider(
+                  color: Colors.black,
+                  thickness: 10,
+                  width: 10,
+                ),
+                const Spacer(),
+                Transform.rotate(
+                    angle: 360 / windDirection,
+                    child: const Icon(FontAwesomeIcons.arrowDown,
+                        color: Colors.blue)),
+                Text('$windSpeed km/h'),
+                const Spacer(),
+                const Icon(
+                  FontAwesomeIcons.cloudRain,
+                  color: Colors.blue,
+                ),
+                const SizedBox(width: 7),
+                Text('$rain mm'),
+                const Spacer(),
+                const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
+                //const SizedBox(width: 10),
+                Text('$precipitationrobability%'),
+                const Spacer()
+              ]),
+            )));
   }
 }

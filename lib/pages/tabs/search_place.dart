@@ -81,7 +81,7 @@ class _SearchPlaceState extends State<SearchPlace> {
                       timezone: city['timezone'],
                       countryCode: city['country_code'],
                       place: city['name'],
-                      country: city['country'],
+                      country: city['country'] ?? ' ',
                       lat: city['latitude'],
                       lon: city['longitude'])
             ]),

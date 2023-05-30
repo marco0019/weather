@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                     child: SizedBox(
-                        height: 860,
+                        height: (24 / dailyIndex.range) * 73,
                         child: PageView.builder(
                             onPageChanged: (indexChanged) =>
                                 dailyIndex.setCurrentDay(indexChanged),

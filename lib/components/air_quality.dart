@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:weather/components/charts/chart_line.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
@@ -20,7 +21,21 @@ class AirQuality extends StatelessWidget {
         future: weather.fetchAirQuality(lat: latitude, lon: longitude),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Row(children: [
+            ListView(scrollDirection: Axis.horizontal,
+            children: [
+              ChartLineExample(lines: lines, linesGradient: linesGradient, horizontalAxisName: horizontalAxisName, verticalAxisNames: verticalAxisNames)
+            ])
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
+    ));
+  }
+}
+/*return Row(children: [
               CircularPercentIndicator(
                 animation: true,
                 animationDuration: 1000,
@@ -47,14 +62,4 @@ class AirQuality extends StatelessWidget {
                 Text('prova1'),
                 Text('prova1'),
               ])
-            ]);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
-      ),
-    ));
-  }
-}
+            ]);*/

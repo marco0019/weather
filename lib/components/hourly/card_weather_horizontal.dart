@@ -31,15 +31,15 @@ final class CardWeatherHorizontal extends StatelessWidget {
         child: Card(
           color: isCurrentDay ? Colors.blue : null,
           child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
               child: Column(
                 children: [
                   Text(date,
                       style:
                           TextStyle(color: isCurrentDay ? Colors.white : null)),
-                  const SizedBox(height: 15),
-                  Lottie.asset(iconName, width: 40, height: 40),
-                  const SizedBox(height: 15),
+                  //const Spacer(),
+                  Lottie.asset(iconName, width: 70, height: 70),
+                  //const Spacer(),
                   Text(value,
                       style:
                           TextStyle(color: isCurrentDay ? Colors.white : null))

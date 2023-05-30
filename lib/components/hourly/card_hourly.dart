@@ -32,7 +32,8 @@ class HourlyCard extends StatelessWidget {
             onTap: () => showModalBottomSheet<void>(
                 showDragHandle: true,
                 context: context,
-                builder: (BuildContext context) => const Text('placeholder')),
+                builder: (BuildContext context) =>
+                    const Center(child: Text('placeholder'))),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(children: [
@@ -42,24 +43,20 @@ class HourlyCard extends StatelessWidget {
                     width: 40, height: 40),
                 const SizedBox(width: 10),
                 Text('$temperature°'),
-                const VerticalDivider(
-                  color: Colors.black,
-                  thickness: 10,
-                  width: 10,
-                ),
+                const SizedBox(width: 7),
+                if (rain == 0)
+                  const Text('- assenti -')
+                else
+                  Column(children: [
+                    Text(GLOBAL.GET_RAIN_CODE(rain)),
+                    Text('$rain mm')
+                  ]),
                 const Spacer(),
                 Transform.rotate(
                     angle: 360 / windDirection,
                     child: const Icon(FontAwesomeIcons.arrowDown,
                         color: Colors.blue)),
                 Text('$windSpeed km/h'),
-                const Spacer(),
-                const Icon(
-                  FontAwesomeIcons.cloudRain,
-                  color: Colors.blue,
-                ),
-                const SizedBox(width: 7),
-                Text('$rain mm'),
                 const Spacer(),
                 const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
                 //const SizedBox(width: 10),

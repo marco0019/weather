@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
-import 'package:weather/pages/init.dart';
+import 'package:weather/unused/hourly_page.dart';
 import '../utils/dependencies.dart';
 
 final class DailyList extends StatelessWidget {

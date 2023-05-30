@@ -209,5 +209,12 @@ class GLOBAL {
     }
     return 0;
   }
+
+  static String GET_RAIN_CODE(double rain) {
+    if (rain == 0) return 'assenti';
+    if (rain <= 0.5) return 'moderate';
+    if (rain <= 1) return 'consistenti';
+    return 'abbondanti';
+  }
 }
 //latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability,rain,weathercode,visibility,windspeed_10m,winddirection_10m,is_day&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin

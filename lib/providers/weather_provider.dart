@@ -33,7 +33,8 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> fetchFile() async {
+  Future<Map<String, dynamic>> fetchWeatherOff(
+      {required double latitude, required double longitude}) async {
     String jsonString = await rootBundle.loadString('assets/weather.json');
     return jsonDecode(jsonString);
   }

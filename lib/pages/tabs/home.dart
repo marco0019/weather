@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
             var value = Map<String, dynamic>.from(snapshot.data as Map);
             final limit = value['daily']['time'].length;
             return FutureBuilder(
-                future: weather.fetchAirQualityOff(
+                future: weather.fetchAirQuality(
                     lat: weather.latitude, lon: weather.longitude),
                 builder: (context, snapshot1) {
                   if (snapshot1.hasData) {

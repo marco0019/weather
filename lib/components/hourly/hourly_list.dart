@@ -28,6 +28,10 @@ final class HourlyList extends StatelessWidget {
                   DateTime.parse(value['time'][i]).month == day.month &&
                   DateTime.parse(value['time'][i]).day == day.day)
                 HourlyCard(
+                    uvIndex: value['uv_index'][i].toInt(),
+                    visibility: value['visibility'][i].toInt(),
+                    percepita: value['apparent_temperature'][i],
+                    umidity: value['relativehumidity_2m'][i].toDouble(),
                     hour: DateTime.parse(value['time'][i]).hour,
                     weathercode: value['weathercode'][i] as int,
                     temperature: value['temperature_2m'][i] as double,
@@ -41,4 +45,3 @@ final class HourlyList extends StatelessWidget {
         ));
   }
 }
-//pk.99377b1a33c03093ee4e776812215a80

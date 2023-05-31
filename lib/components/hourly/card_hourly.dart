@@ -6,6 +6,7 @@ class HourlyCard extends StatelessWidget {
   final int hour;
   final int weathercode;
   final double temperature;
+  final double umidity;
   final int windDirection;
   final double windSpeed;
   final int precipitationrobability;
@@ -13,6 +14,7 @@ class HourlyCard extends StatelessWidget {
   final double rain;
   final double percepita;
   final int visibility;
+  final double pressure;
   final double? o3;
   final double? so2;
   final double? no2;
@@ -24,12 +26,14 @@ class HourlyCard extends StatelessWidget {
       {super.key,
       this.percepita = 0,
       this.visibility = 1000,
+      this.umidity = 0,
       this.uvIndex = 0,
       this.o3 = 1,
       this.so2 = 0,
       this.no2 = 100,
       this.pm10 = 0,
       this.pm25 = 0,
+      this.pressure = 0,
       required this.hour,
       required this.weathercode,
       required this.temperature,
@@ -72,7 +76,7 @@ class HourlyCard extends StatelessWidget {
                     width: 40, height: 40),
                 const SizedBox(width: 10),
                 Text('$temperature°'),
-                const SizedBox(width: 7),
+                const SizedBox(width: 20),
                 if (rain == 0)
                   const Text('- assenti -')
                 else
@@ -81,16 +85,16 @@ class HourlyCard extends StatelessWidget {
                     Text('$rain mm')
                   ]),
                 const Spacer(),
-                Transform.rotate(
-                    angle: 360 / windDirection,
-                    child: const Icon(FontAwesomeIcons.arrowDown,
-                        color: Colors.blue)),
-                Text('$windSpeed km/h'),
-                const Spacer(),
+                //Transform.rotate(
+                //    angle: 180 / windDirection * pi,
+                //    child: const Icon(FontAwesomeIcons.arrowRight,
+                //        color: Colors.blue)),
+                //Text('$windSpeed km/h'),
+                //const Spacer(),
                 const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
                 //const SizedBox(width: 10),
                 Text('$precipitationrobability%'),
-                const Spacer()
+                //const Spacer()
               ]),
             )));
   }

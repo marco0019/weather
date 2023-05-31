@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weather/components/dot.dart';
 import 'package:weather/utils/dependencies.dart';
+import 'dart:math';
 
 class HourlyInfo extends StatelessWidget {
   int? visibility;
@@ -67,8 +68,19 @@ class HourlyInfo extends StatelessWidget {
       const SizedBox(height: 10),
       Text('Percepita - $percepita °C', textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      Text('Wind - ${GLOBAL.GET_WIND_DIRECTION(windDirection)} $windSpeed km/h',
-          textAlign: TextAlign.center),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+            'Wind - ${GLOBAL.GET_WIND_DIRECTION(windDirection)} $windSpeed km/h ',
+            textAlign: TextAlign.center),
+        Container(
+            padding: const EdgeInsets.all(4),
+            decoration: const BoxDecoration(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.all(Radius.circular(100))),
+            child: Transform.rotate(
+                angle: 180 / windDirection * pi,
+                child: const Icon(FontAwesomeIcons.arrowRight, size: 10))),
+      ]),
       const SizedBox(height: 10),
       if (pressure != null)
         Text('Pressure - $pressure mb', textAlign: TextAlign.center),

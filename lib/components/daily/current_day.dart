@@ -31,7 +31,7 @@ class CurrentDay extends StatelessWidget {
         const Spacer(),
         CardData(
             iconName: 'assets/icons/rain.json',
-            data: Text('${info['precipitation'][index]}m')),
+            data: Text('${info['precipitation'][index]}mm')),
         const Spacer(),
         CardData(
             iconName: 'assets/icons/water.json',

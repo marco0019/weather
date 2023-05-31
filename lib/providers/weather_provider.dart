@@ -58,16 +58,16 @@ class WeatherProvider with ChangeNotifier {
   Future<Map<String, dynamic>> fetchAirQuality(
       {required double lat, required double lon}) async {
     final response = await get(Uri.parse(
-        '${dotenv.env['API_AIR_QUALITY_BASE_URL']}&latitude=$lat&longitude=$lon'));
+        '${dotenv.env['API_AIR_QUALITY_URL_BASIC']}&latitude=$lat&longitude=$lon'));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load cities');
     }
   }
-  Future<Map<String, dynamic>> fetchAirQualityOff({
-    required double lat, required double lon
-  }) async{
+
+  Future<Map<String, dynamic>> fetchAirQualityOff(
+      {required double lat, required double lon}) async {
     String jsonString = await rootBundle.loadString('assets/air.json');
     return jsonDecode(jsonString);
   }

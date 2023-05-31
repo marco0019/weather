@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather/pages/frame.dart';
 import 'package:weather/pages/init.dart';
 import 'package:weather/providers/theme.dart';
+import 'package:weather/themes/minimal.dart';
 import 'utils/dependencies.dart';
 
 Future<void> main() async {
@@ -15,12 +16,11 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(useMaterial3: true).copyWith(
-          primaryColor: Colors.blueGrey,
-          cardTheme: const CardTheme(
-              elevation: 0, color: Color.fromARGB(255, 245, 245, 245))),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      //ThemeData.dark(useMaterial3: true)
+      themeAnimationDuration: const Duration(milliseconds: 200),
+      theme: ThemeData.light(useMaterial3: true)
+          .copyWith(primaryColor: Colors.blue, highlightColor: Colors.blue),
+      darkTheme: ThemeData.dark(useMaterial3: true)
+          .copyWith(primaryColor: Colors.blue, highlightColor: Colors.blue),
       themeMode: context.watch<ThemeModel>().themeMode,
       home: const Frame(),
     );

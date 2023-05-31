@@ -26,7 +26,8 @@ class DailyListHorizontal extends StatelessWidget {
                     '${GLOBAL.DAYS[DateTime.parse(value['time'][i]).weekday - 1].substring(0, 3)} ${DateTime.parse(value['time'][i]).day}',
                 value:
                     '${value['temperature_2m_min'][i]}°/${value['temperature_2m_max'][i]}°',
-                iconName: GLOBAL.GET_ICON_FROM_WMO_CODE(50, false)),
+                iconName: GLOBAL.GET_ICON_FROM_WMO_CODE(
+                    value['weathercode'][i], true)),
         ]));
   }
 }

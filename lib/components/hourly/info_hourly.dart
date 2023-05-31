@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weather/components/dot.dart';
+import 'package:weather/main.dart';
 import 'package:weather/utils/dependencies.dart';
 import 'dart:math';
 
@@ -14,7 +15,7 @@ class HourlyInfo extends StatelessWidget {
   double percepita;
   double windSpeed;
   int windDirection;
-  int? pressure;
+  double pressure;
   double? o3;
   double? no2;
   double? so2;
@@ -22,6 +23,7 @@ class HourlyInfo extends StatelessWidget {
   double? pm25;
   int? aqi;
   List<int> state = [];
+
   HourlyInfo(
       {super.key,
       this.visibility = 0,
@@ -32,6 +34,7 @@ class HourlyInfo extends StatelessWidget {
       this.so2 = 0,
       this.pm10 = 0,
       this.pm25 = 0,
+      this.aqi = 0,
       required this.precipitation,
       required this.probability,
       required this.temperature,
@@ -82,19 +85,16 @@ class HourlyInfo extends StatelessWidget {
                 child: const Icon(FontAwesomeIcons.arrowRight, size: 10))),
       ]),
       const SizedBox(height: 10),
-      if (pressure != null)
-        Text('Pressure - $pressure mb', textAlign: TextAlign.center),
-      if (pressure != null) const SizedBox(height: 10),
+      Text('Pressure - $pressure mb', textAlign: TextAlign.center),
+      const SizedBox(height: 10),
       Card(
           child: Padding(
               padding: const EdgeInsets.all(15),
               child: Row(children: [
-                Column(children: [
-                  Text(
-                    GLOBAL.AIR_STATES[state[5]],
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(GLOBAL.AIR_STATES[state[5]],
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[3]]),
@@ -136,10 +136,10 @@ class HourlyInfo extends StatelessWidget {
                         (GLOBAL.GET_IQA_INFO(aqi ?? 0)['color'] as Color)
                             .withAlpha(75),
                     radius: 90,
-                    percent: (300 - (aqi ?? 0)) / 300,
+                    percent: (100 - (aqi ?? 0)) / 100,
                     lineWidth: 25,
                     circularStrokeCap: CircularStrokeCap.round,
-                    center: Text(aqi.toString(),
+                    center: Text((aqi ?? '0').toString(),
                         style: const TextStyle(fontSize: 50)))
               ])))
     ]);

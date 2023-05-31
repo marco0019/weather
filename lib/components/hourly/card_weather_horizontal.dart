@@ -29,7 +29,7 @@ final class CardWeatherHorizontal extends StatelessWidget {
           dailyIndex.setCurrentDay(index);
         },
         child: Card(
-          color: isCurrentDay ? Colors.blue : null,
+          color: isCurrentDay ? Theme.of(context).primaryColor : null,
           child: Padding(
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
               child: Column(

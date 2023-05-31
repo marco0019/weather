@@ -185,6 +185,8 @@ class GLOBAL {
     Colors.deepPurple
   ];
 
+  static Color GET_COLOR_OF_AQI(int aqi) => AIR_QUALITY_COLORS[aqi ~/ 20];
+
   static List<int> GET_QUALITY_OF_AIR(List<int> values) {
     final List<int> result = [];
     final indexes = [

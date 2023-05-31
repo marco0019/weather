@@ -7,6 +7,7 @@ import 'package:weather/utils/dependencies.dart';
 
 class Frame extends StatefulWidget {
   const Frame({super.key});
+
   @override
   createState() => _FrameState();
 }
@@ -19,12 +20,15 @@ class _FrameState extends State<Frame> {
     PlacesSaved(),
     Settings()
   ];
+
   @override
   Widget build(BuildContext context) {
     final menu = context.watch<MenuProvider>();
     return DefaultTabController(
         length: pages.length,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          extendBody: true,
           bottomNavigationBar: const BottomCustomBar(),
           body: pages[menu.currentIndex],
         ));

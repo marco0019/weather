@@ -9,6 +9,10 @@ class SingleChoice extends StatelessWidget {
   Widget build(BuildContext context) {
     final home = context.watch<HomeProvider>();
     return SegmentedButton<int>(
+      style: const ButtonStyle(
+          padding: MaterialStatePropertyAll(EdgeInsets.all(5)),
+          animationDuration: Duration(milliseconds: 500),
+          backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
       segments: const <ButtonSegment<int>>[
         ButtonSegment<int>(value: 1, label: Text('1 hr')),
         ButtonSegment<int>(value: 2, label: Text('2 hr')),

@@ -38,12 +38,7 @@ class Home extends StatelessWidget {
                               expandedTitleScale: 2,
                               title: InkWell(
                                   onTap: () => menu.setIndex(1),
-                                  child: Text(weather.title.toUpperCase(),
-                                      style: TextStyle(
-                                          overflow: TextOverflow.ellipsis,
-                                          color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.black)))),
+                                  child: Text(weather.title.toUpperCase()))),
                         ),
                         const SliverToBoxAdapter(child: SizedBox(height: 10)),
                         SliverToBoxAdapter(
@@ -63,8 +58,9 @@ class Home extends StatelessWidget {
                                 value: value['daily'],
                                 currentIndex: dailyIndex.currentDay)),
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        const SliverToBoxAdapter(child: SingleChoice()),
-                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                        const SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 40, width: 80, child: SingleChoice())),
                         SliverToBoxAdapter(
                             child: SizedBox(
                                 height: (24 / dailyIndex.range) * 73,
@@ -149,12 +145,12 @@ class Home extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('${snapshot.error}'));
                   }
-                  return const Center(child: Text('loadint'));
+                  return Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION());
                 });
           } else if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));
           }
-          return const Center(child: Text('loadint'));
+          return Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION());
         });
   }
 }

@@ -39,6 +39,7 @@ flutter:
   assets:
     - assets/weather.json
     - assets/city.json
+    - assets/air.json
     - assets/logo.png
     - assets/icons/wind.json
     - assets/icons/water.json

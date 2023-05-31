@@ -11,9 +11,25 @@ class HourlyCard extends StatelessWidget {
   final int precipitationrobability;
   final bool isDay;
   final double rain;
+  final double percepita;
+  final int visibility;
+  final double? o3;
+  final double? so2;
+  final double? no2;
+  final double? pm10;
+  final double? pm25;
+  final int uvIndex;
 
   const HourlyCard(
       {super.key,
+      this.percepita = 0,
+      this.visibility = 1000,
+      this.uvIndex = 0,
+      this.o3 = 1,
+      this.so2 = 0,
+      this.no2 = 100,
+      this.pm10 = 0,
+      this.pm25 = 0,
       required this.hour,
       required this.weathercode,
       required this.temperature,
@@ -26,14 +42,27 @@ class HourlyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: .5,
         child: InkWell(
             enableFeedback: false,
             onTap: () => showModalBottomSheet<void>(
                 showDragHandle: true,
                 context: context,
-                builder: (BuildContext context) =>
-                    const Center(child: Text('placeholder'))),
+                builder: (BuildContext context) => Center(
+                        child: HourlyInfo(
+                      temperature: temperature,
+                      windSpeed: windSpeed,
+                      windDirection: windDirection,
+                      probability: precipitationrobability,
+                      precipitation: rain,
+                      percepita: percepita,
+                      visibility: visibility,
+                      o3: o3,
+                      so2: so2,
+                      no2: no2,
+                      pm10: pm10,
+                      pm25: pm25,
+                      UVindex: uvIndex,
+                    ))),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(children: [

@@ -64,4 +64,10 @@ class WeatherProvider with ChangeNotifier {
       throw Exception('Failed to load cities');
     }
   }
+  Future<Map<String, dynamic>> fetchAirQualityOff({
+    required double lat, required double lon
+  }) async{
+    String jsonString = await rootBundle.loadString('assets/air.json');
+    return jsonDecode(jsonString);
+  }
 }

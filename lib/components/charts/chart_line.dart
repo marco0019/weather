@@ -38,13 +38,12 @@ class ChartLineExample extends StatelessWidget {
                         DateTime.parse(lines[i][horizontalAxisName][j])
                             .millisecondsSinceEpoch
                             .toDouble(),
-                        lines[i][verticalAxisNames[i]][j] as double)
+                        (lines[i][verticalAxisNames[i]][j] ?? 0).toDouble())
                 ],
                 dotData: FlDotData(show: true),
                 isCurved: true,
                 barWidth: 2,
-                //belowBarData: BarAreaData(
-                //    show: true, color: const Color.fromRGBO(50, 100, 200, .2)),
+                //belowBarData: BarAreaData(show: true),
                 gradient: linesGradient[i])
         ]));
   }

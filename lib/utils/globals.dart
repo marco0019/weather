@@ -205,7 +205,7 @@ class GLOBAL {
 
   static int GET_LAST_INDEX(List<int> list, int target) {
     for (int i = 0; i < list.length; i++) {
-      if (list[i] >= target) return i - 1;
+      if (list[i] > target) return i - 1;
     }
     return 0;
   }
@@ -217,4 +217,3 @@ class GLOBAL {
     return 'abbondanti';
   }
 }
-//latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability,rain,weathercode,visibility,windspeed_10m,winddirection_10m,is_day&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=Europe%2FBerlin

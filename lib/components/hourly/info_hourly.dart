@@ -1,63 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weather/components/dot.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class HourlyInfo extends StatelessWidget {
-  final int visibility;
-  final double precipitation;
-  final int probability;
-  final int umidity;
-  final int UVindex;
-  final double temperature;
-  final double percepita;
-  final double windSpeed;
-  final int windDirection;
-  final int pressure;
-  final double o3;
-  final double no2;
-  final double so2;
-  final double pm10;
-  final double pm25;
-  final int aqi;
+  int? visibility;
+  double precipitation;
+  int probability;
+  int? umidity;
+  int? UVindex;
+  double temperature;
+  double percepita;
+  double windSpeed;
+  int windDirection;
+  int? pressure;
+  double? o3;
+  double? no2;
+  double? so2;
+  double? pm10;
+  double? pm25;
+  int? aqi;
   List<int> state = [];
-
   HourlyInfo(
       {super.key,
-      required this.visibility,
+      this.visibility = 0,
+      this.UVindex = 0,
+      this.pressure = 0,
+      this.o3 = 0,
+      this.no2 = 0,
+      this.so2 = 0,
+      this.pm10 = 0,
+      this.pm25 = 0,
       required this.precipitation,
       required this.probability,
-      required this.umidity,
-      required this.UVindex,
       required this.temperature,
       required this.percepita,
       required this.windSpeed,
-      required this.windDirection,
-      required this.pressure,
-      required this.o3,
-      required this.no2,
-      required this.so2,
-      required this.pm10,
-      required this.pm25,
-      required this.aqi}) {
-    state = GLOBAL.GET_QUALITY_OF_AIR(
-        [pm25.toInt(), pm10.toInt(), no2.toInt(), o3.toInt(), so2.toInt()]);
+      required this.windDirection}) {
+    state = GLOBAL.GET_QUALITY_OF_AIR([
+      (pm25 ?? 10).toInt(),
+      (pm10 ?? 10).toInt(),
+      (no2 ?? 10).toInt(),
+      (o3 ?? 10).toInt(),
+      (so2 ?? 10).toInt()
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      Text('Visibility - ${visibility / 1000} km', textAlign: TextAlign.center),
-      const SizedBox(height: 10),
+      if (visibility != null)
+        Text('Visibility - ${visibility! / 1000} km',
+            textAlign: TextAlign.center),
+      if (visibility != null) const SizedBox(height: 10),
       Text('Precipitation - $precipitation mm', textAlign: TextAlign.center),
       const SizedBox(height: 10),
       Text('Probability - $probability%', textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      Text('Umidity - $umidity %', textAlign: TextAlign.center),
-      const SizedBox(height: 10),
-      Text('UV index - $UVindex', textAlign: TextAlign.center),
-      const SizedBox(height: 10),
+      if (umidity != null)
+        Text('Umidity - $umidity %', textAlign: TextAlign.center),
+      if (umidity != null) const SizedBox(height: 10),
+      if (UVindex != null)
+        Text('UV index - $UVindex', textAlign: TextAlign.center),
+      if (UVindex != null) const SizedBox(height: 10),
       Text('Temperature - $temperature °C', textAlign: TextAlign.center),
       const SizedBox(height: 10),
       Text('Percepita - $percepita °C', textAlign: TextAlign.center),
@@ -65,8 +70,9 @@ class HourlyInfo extends StatelessWidget {
       Text('Wind - ${GLOBAL.GET_WIND_DIRECTION(windDirection)} $windSpeed km/h',
           textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      Text('Pressure - $pressure mb', textAlign: TextAlign.center),
-      const SizedBox(height: 10),
+      if (pressure != null)
+        Text('Pressure - $pressure mb', textAlign: TextAlign.center),
+      if (pressure != null) const SizedBox(height: 10),
       Card(
           child: Padding(
               padding: const EdgeInsets.all(15),
@@ -110,22 +116,19 @@ class HourlyInfo extends StatelessWidget {
                 ]),
                 const Spacer(),
                 CircularPercentIndicator(
-                  animation: true,
-                  animationDuration: 1000,
-                  curve: Curves.bounceInOut,
-                  progressColor: GLOBAL.GET_IQA_INFO(aqi)['color'],
-                  backgroundColor: (GLOBAL.GET_IQA_INFO(aqi)['color'] as Color)
-                      .withAlpha(75),
-                  radius: 90,
-                  percent: (300 - aqi) / 300,
-                  lineWidth: 25,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  center: Text(
-                    aqi.toString(),
-                    style: const TextStyle(fontSize: 50),
-                  ),
-                ),
-                //SegmentedButton(segments: ButtonSegment(value:), selected: selected)
+                    animation: true,
+                    animationDuration: 1000,
+                    curve: Curves.bounceInOut,
+                    progressColor: GLOBAL.GET_IQA_INFO(aqi ?? 0)['color'],
+                    backgroundColor:
+                        (GLOBAL.GET_IQA_INFO(aqi ?? 0)['color'] as Color)
+                            .withAlpha(75),
+                    radius: 90,
+                    percent: (300 - (aqi ?? 0)) / 300,
+                    lineWidth: 25,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    center: Text(aqi.toString(),
+                        style: const TextStyle(fontSize: 50)))
               ])))
     ]);
   }

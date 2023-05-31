@@ -3,19 +3,26 @@ import 'package:weather/components/init.dart';
 
 final class HourlyList extends StatelessWidget {
   final Map<String, dynamic> value;
+  final Map<String, dynamic> airValue;
   final DateTime day;
   final int range;
 
   const HourlyList(
-      {super.key, this.range = 1, required this.day, required this.value});
+      {super.key,
+      this.range = 1,
+      required this.day,
+      required this.value,
+      required this.airValue});
 
   @override
   Widget build(BuildContext context) {
+    final dataLength = (value['time'] as List<dynamic>).length;
+    //final airValueLength = (airValue['time'] as List<dynamic>).length;
     return Padding(
         padding: const EdgeInsets.all(5),
         child: Column(
           children: [
-            for (int i = 0; i < (value['time'] as List<dynamic>).length; i++)
+            for (int i = 0; i < dataLength; i++)
               if (DateTime.parse(value['time'][i]).hour % range == 0 &&
                   DateTime.parse(value['time'][i]).year == day.year &&
                   DateTime.parse(value['time'][i]).month == day.month &&

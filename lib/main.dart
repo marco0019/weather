@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weather/pages/frame.dart';
 import 'package:weather/pages/init.dart';
 import 'package:weather/providers/theme.dart';
-import 'package:weather/themes/minimal.dart';
 import 'utils/dependencies.dart';
 
 Future<void> main() async {

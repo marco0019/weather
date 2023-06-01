@@ -11,8 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
-    final isDarkMode = context.watch<ThemeModel>().isDarkMode;
-    final dailyIndex = context.watch<HomeProvider>();
+    final day = context.watch<HomeProvider>();
     final menu = context.watch<MenuProvider>();
     return FutureBuilder(
         future: weather.fetchWeather(
@@ -56,23 +55,21 @@ class Home extends StatelessWidget {
                             child: DailyListHorizontal(
                                 limit: limit,
                                 value: value['daily'],
-                                currentIndex: dailyIndex.currentDay)),
+                                currentIndex: day.currentDay)),
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        const SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 40, width: 80, child: SingleChoice())),
+                        const SliverToBoxAdapter(child: SingleChoice()),
                         SliverToBoxAdapter(
                             child: SizedBox(
-                                height: (24 / dailyIndex.range) * 73,
+                                height: (24 / day.range) * 73,
                                 child: PageView.builder(
                                     onPageChanged: (indexChanged) =>
-                                        dailyIndex.setCurrentDay(indexChanged),
-                                    controller: dailyIndex.controller,
+                                        day.setCurrentDay(indexChanged),
+                                    controller: day.controller,
                                     scrollDirection: Axis.horizontal,
                                     itemCount: limit,
                                     itemBuilder: (context, index) => HourlyList(
                                         airValue: snapshot1.data!['hourly'],
-                                        range: dailyIndex.range,
+                                        range: day.range,
                                         day: DateTime.parse(
                                             value['daily']['time'][index]),
                                         value: value['hourly'])))),

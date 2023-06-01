@@ -4,7 +4,8 @@ import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
 final class SearchPlace extends StatefulWidget {
-  const SearchPlace({Key? key}) : super(key: key);
+  final WeatherProvider wp;
+  const SearchPlace({super.key, required this.wp});
 
   @override
   State<SearchPlace> createState() => _SearchPlaceState();
@@ -16,11 +17,10 @@ class _SearchPlaceState extends State<SearchPlace> {
   String error = '';
   bool? isLoading;
 
-  Future<void> setList(
-      {required WeatherProvider wp, required String city}) async {
+  Future<void> setList({required String city}) async {
     try {
       setState(() => isLoading = true);
-      final result = await wp.fetchMapsGeoCoding(city.trim());
+      final result = await widget.wp.fetchMapsGeoCoding(city.trim());
       setState(() => cities = result);
       setState(() => isLoading = false);
     } on Exception catch (err) {
@@ -30,10 +30,22 @@ class _SearchPlaceState extends State<SearchPlace> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    /*_controller.addListener(() {
+      if (_controller.text != '') setList(city: _controller.text);
+    });*/
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final map = context.read<WeatherProvider>();
     return Scaffold(
-      //bottomNavigationBar: const BottomCustomBar(),
       appBar: AppBar(title: const Text('Search')),
       body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,28 +53,51 @@ class _SearchPlaceState extends State<SearchPlace> {
             child: ListView(children: [
               Padding(
                   padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter a city or any place...',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(0))),
-                      contentPadding: EdgeInsets.all(15),
+                  child: Row(children: [
+                    SizedBox(
+                      width: 250,
+                      child: TextFormField(
+                        controller: _controller,
+                        cursorColor: Theme.of(context).primaryColor,
+                        decoration: InputDecoration(
+                          hintText: 'Enter a city or any place...',
+                          fillColor: Theme.of(context).primaryColor,
+                          focusColor: Theme.of(context).primaryColor,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
+                          contentPadding: const EdgeInsets.all(15),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Il campo non può essere vuoto';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Il campo non può essere vuoto';
-                      }
-                      return null;
-                    },
-                  )),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                        autofocus: true,
+                        style: ButtonStyle(
+                            //shape: MaterialStatePropertyAll(),
+                            padding: const MaterialStatePropertyAll(
+                                EdgeInsets.all(0)),
+                            overlayColor: MaterialStatePropertyAll(
+                                Theme.of(context).primaryColor.withOpacity(.1)),
+                            shadowColor: const MaterialStatePropertyAll(
+                                Colors.transparent),
+                            foregroundColor: MaterialStatePropertyAll(
+                                Theme.of(context).primaryColor)),
+                        onPressed: () => _controller.text == ''
+                            ? null
+                            : setList(city: _controller.text),
+                        child: const Icon(FontAwesomeIcons.paperPlane))
+                  ])),
               const SizedBox(height: 16.0),
-              ElevatedButton(
-                child: const Text('Invia'),
-                onPressed: () => _controller.text == ''
-                    ? null
-                    : setList(wp: map, city: _controller.text),
-              ),
               if (error != '')
                 Text(error)
               else if (isLoading == null)

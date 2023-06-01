@@ -13,17 +13,16 @@ class Frame extends StatefulWidget {
 }
 
 class _FrameState extends State<Frame> {
-  int currentIndex = 0;
-  final List<Widget> pages = const [
-    Home(),
-    SearchPlace(),
-    PlacesSaved(),
-    Settings()
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final weather = context.watch<WeatherProvider>();
     final menu = context.watch<MenuProvider>();
+    final List<Widget> pages = [
+      const Home(),
+      SearchPlace(wp: weather),
+      const PlacesSaved(),
+      const Settings()
+    ];
     return DefaultTabController(
         length: pages.length,
         child: Scaffold(

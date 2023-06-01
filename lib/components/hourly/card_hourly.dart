@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/dot.dart';
 import 'package:weather/components/hourly/info_hourly.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';

@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
+import 'package:weather/pages/frame.dart';
 import 'package:weather/providers/init.dart';
 import 'dependencies.dart';
 
@@ -14,6 +14,9 @@ class GLOBAL {
     ChangeNotifierProvider(create: (_) => HomeProvider()),
     ChangeNotifierProvider(create: (_) => MenuProvider())
   ];
+  static Map<String, Widget Function(BuildContext)> ROUTES = {
+    '/home': (context) => const Frame()
+  };
   static List<String> DAYS = [
     'Monday',
     'Tuesday',
@@ -218,4 +221,11 @@ class GLOBAL {
     if (rain <= 1) return 'consistenti';
     return 'abbondanti';
   }
+
+  static bool HAS_SAME_DAY(DateTime target, DateTime ref) =>
+      target.year == ref.year &&
+      target.month == ref.month &&
+      target.day == ref.day;
+
+  static Color get GREY => Colors.grey.withOpacity(.5);
 }

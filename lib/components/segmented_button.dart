@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/providers/home_provider.dart';
 import 'package:weather/utils/dependencies.dart';
@@ -8,20 +9,33 @@ class SingleChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final home = context.watch<HomeProvider>();
-    return SegmentedButton<int>(
-      style: const ButtonStyle(
-          padding: MaterialStatePropertyAll(EdgeInsets.all(5)),
-          animationDuration: Duration(milliseconds: 500),
-          backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
-      segments: const <ButtonSegment<int>>[
-        ButtonSegment<int>(value: 1, label: Text('1 hr')),
-        ButtonSegment<int>(value: 2, label: Text('2 hr')),
-        ButtonSegment<int>(value: 3, label: Text('3 hr')),
+    return Container(
+        //decoration: BoxDecoration(
+        //    borderRadius: const BorderRadius.all(Radius.circular(4)),
+        //    border: Border.all(color: GLOBAL.GREY)),
+        child: Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        InkWell(
+            onTap: () => home.range = 1,
+            child: itemTextButton(context, '1hr', home.range == 1)),
+        InkWell(
+            onTap: () => home.range = 2,
+            child: itemTextButton(context, '2hr', home.range == 2)),
+        InkWell(
+            onTap: () => home.range = 3,
+            child: itemTextButton(context, '3hr', home.range == 3))
       ],
-      selected: <int>{home.range},
-      onSelectionChanged: (Set<int> newSelection) {
-        home.range = newSelection.first;
-      },
-    );
+    ));
   }
+
+  Widget itemTextButton(
+          BuildContext ctx, String label, bool isActive) =>
+      Container(
+          decoration: BoxDecoration(
+              color: isActive ? Theme.of(ctx).primaryColor : null,
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
+          padding: const EdgeInsets.all(10),
+          child: Text(label));
 }

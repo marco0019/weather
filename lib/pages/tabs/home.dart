@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/air_quality.dart';
 import 'package:weather/components/init.dart';
+import 'package:weather/pages/meteogram.dart';
 import 'package:weather/providers/init.dart';
 import '../../components/segmented_button.dart';
 import '../../utils/dependencies.dart';
@@ -54,10 +55,11 @@ class Home extends StatelessWidget {
                             child: SizedBox(
                           height: 75,
                           child: ChartLineExample(
+                              date: DateTime.now(),
                               lines: [value['hourly']],
                               linesGradient: const [
                                 LinearGradient(
-                                    colors: [Colors.green, Colors.yellowAccent])
+                                    colors: [Colors.green, Colors.yellow])
                               ],
                               horizontalAxisName: 'time',
                               verticalAxisNames: ['temperature_2m']),
@@ -68,7 +70,7 @@ class Home extends StatelessWidget {
                                 limit: limit,
                                 value: value['daily'],
                                 currentIndex: day.currentDay)),
-                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                        const SliverToBoxAdapter(child: SizedBox(height: 10)),
                         const SliverToBoxAdapter(child: SingleChoice()),
                         SliverToBoxAdapter(
                             child: SizedBox(
@@ -88,7 +90,13 @@ class Home extends StatelessWidget {
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverToBoxAdapter(
                             child: InkWell(
-                                onTap: () {},
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MeteoGram(
+                                            hourlyData: value['hourly'],
+                                            airData:
+                                                snapshot1.data!['hourly']))),
                                 child: const Padding(
                                     padding: EdgeInsets.all(10),
                                     child: Row(children: [

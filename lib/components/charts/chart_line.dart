@@ -7,7 +7,7 @@ class ChartLineExample extends StatelessWidget {
   final List<Gradient> linesGradient;
   final String horizontalAxisName;
   final List<String> verticalAxisNames;
-  final double? date;
+  final DateTime? date;
 
   const ChartLineExample(
       {super.key,
@@ -37,11 +37,14 @@ class ChartLineExample extends StatelessWidget {
                             (lines[i][horizontalAxisName] as List<dynamic>)
                                 .length;
                         j++)
-                      FlSpot(
-                          DateTime.parse(lines[i][horizontalAxisName][j])
-                              .millisecondsSinceEpoch
-                              .toDouble(),
-                          (lines[i][verticalAxisNames[i]][j] ?? 0).toDouble())
+                      if (date == null ||
+                          GLOBAL.HAS_SAME_DAY(date!,
+                              DateTime.parse(lines[i][horizontalAxisName][j])))
+                        FlSpot(
+                            DateTime.parse(lines[i][horizontalAxisName][j])
+                                .millisecondsSinceEpoch
+                                .toDouble(),
+                            (lines[i][verticalAxisNames[i]][j] ?? 0).toDouble())
                   ],
                   dotData: FlDotData(show: false),
                   isCurved: true,

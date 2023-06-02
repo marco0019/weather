@@ -23,28 +23,29 @@ final class CardWeatherHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     final dailyIndex = context.watch<HomeProvider>();
     return InkWell(
-        splashColor: Colors.transparent,
-        onTap: () {
-          dailyIndex.controller.jumpToPage(index);
-          dailyIndex.setCurrentDay(index);
-        },
-        child: Card(
-          color: isCurrentDay ? Theme.of(context).primaryColor : null,
-          child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-              child: Column(
-                children: [
-                  Text(date,
-                      style:
-                          TextStyle(color: isCurrentDay ? Colors.white : null)),
-                  //const Spacer(),
-                  Lottie.asset(iconName, width: 70, height: 70),
-                  //const Spacer(),
-                  Text(value,
-                      style:
-                          TextStyle(color: isCurrentDay ? Colors.white : null))
-                ],
-              )),
-        ));
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      onTap: () {
+        dailyIndex.controller.jumpToPage(index);
+        dailyIndex.setCurrentDay(index);
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              color: isCurrentDay
+                  ? Theme.of(context).primaryColor.withOpacity(.4)
+                  : null,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          child: Column(
+            children: [
+              Text(date,
+                  style: TextStyle(color: isCurrentDay ? Colors.white : null)),
+              //const Spacer(),
+              Lottie.asset(iconName, width: 70, height: 70),
+              //const Spacer(),
+              Text(value,
+                  style: TextStyle(color: isCurrentDay ? Colors.white : null))
+            ],
+          )),
+    );
   }
 }

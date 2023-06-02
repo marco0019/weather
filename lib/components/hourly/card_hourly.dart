@@ -49,12 +49,12 @@ class HourlyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(.6)),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: InkWell(
-          radius: 10,
+          highlightColor: Theme.of(context).primaryColor.withOpacity(.4),
+          customBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.withOpacity(.6))),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           enableFeedback: false,
           onTap: () => showModalBottomSheet<void>(
               showDragHandle: true,

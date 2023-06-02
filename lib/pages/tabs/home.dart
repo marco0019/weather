@@ -37,7 +37,12 @@ class Home extends StatelessWidget {
                               expandedTitleScale: 2,
                               title: InkWell(
                                   onTap: () => menu.setIndex(1),
-                                  child: Text(weather.title.toUpperCase()))),
+                                  child: Text(
+                                    weather.title.toUpperCase(),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .primaryColorLight),
+                                  ))),
                         ),
                         const SliverToBoxAdapter(child: SizedBox(height: 10)),
                         SliverToBoxAdapter(
@@ -45,12 +50,19 @@ class Home extends StatelessWidget {
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         const SliverToBoxAdapter(child: Divider()),
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        const SliverToBoxAdapter(
-                            child: Text(
-                          'Days',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 30),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                          height: 75,
+                          child: ChartLineExample(
+                              lines: [value['hourly']],
+                              linesGradient: const [
+                                LinearGradient(
+                                    colors: [Colors.green, Colors.yellowAccent])
+                              ],
+                              horizontalAxisName: 'time',
+                              verticalAxisNames: ['temperature_2m']),
                         )),
+                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverToBoxAdapter(
                             child: DailyListHorizontal(
                                 limit: limit,

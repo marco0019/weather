@@ -3,8 +3,7 @@ import 'package:weather/components/charts/chart_line.dart';
 
 class AirQuality extends StatelessWidget {
   final Map<String, dynamic> data;
-  const AirQuality(
-      {super.key, required this.data});
+  const AirQuality({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {

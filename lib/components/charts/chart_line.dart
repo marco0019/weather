@@ -7,9 +7,11 @@ class ChartLineExample extends StatelessWidget {
   final List<Gradient> linesGradient;
   final String horizontalAxisName;
   final List<String> verticalAxisNames;
+  final double? date;
 
   const ChartLineExample(
       {super.key,
+      this.date = null,
       required this.lines,
       required this.linesGradient,
       required this.horizontalAxisName,
@@ -17,34 +19,38 @@ class ChartLineExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LineChart(LineChartData(
-        gridData: FlGridData(show: false, verticalInterval: 1),
-        borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
-            topTitles: AxisTitles(),
-            bottomTitles: AxisTitles(),
-            rightTitles: AxisTitles()),
-        lineTouchData: LineTouchData(enabled: true),
-        lineBarsData: [
-          for (int i = 0; i < lines.length; i++)
-            LineChartBarData(
-                spots: [
-                  for (int j = 0;
-                      j <
-                          (lines[i][horizontalAxisName] as List<dynamic>)
-                              .length;
-                      j++)
-                    FlSpot(
-                        DateTime.parse(lines[i][horizontalAxisName][j])
-                            .millisecondsSinceEpoch
-                            .toDouble(),
-                        (lines[i][verticalAxisNames[i]][j] ?? 0).toDouble())
-                ],
-                dotData: FlDotData(show: true),
-                isCurved: true,
-                barWidth: 2,
-                //belowBarData: BarAreaData(show: true),
-                gradient: linesGradient[i])
-        ]));
+    return LineChart(
+      LineChartData(
+          gridData: FlGridData(show: false, verticalInterval: 1),
+          borderData: FlBorderData(show: false),
+          titlesData: FlTitlesData(
+              topTitles: AxisTitles(),
+              bottomTitles: AxisTitles(),
+              rightTitles: AxisTitles()),
+          lineTouchData: LineTouchData(enabled: true),
+          lineBarsData: [
+            for (int i = 0; i < lines.length; i++)
+              LineChartBarData(
+                  spots: [
+                    for (int j = 0;
+                        j <
+                            (lines[i][horizontalAxisName] as List<dynamic>)
+                                .length;
+                        j++)
+                      FlSpot(
+                          DateTime.parse(lines[i][horizontalAxisName][j])
+                              .millisecondsSinceEpoch
+                              .toDouble(),
+                          (lines[i][verticalAxisNames[i]][j] ?? 0).toDouble())
+                  ],
+                  dotData: FlDotData(show: false),
+                  isCurved: true,
+                  barWidth: 2,
+                  //belowBarData: BarAreaData(show: true),
+                  gradient: linesGradient[i])
+          ]),
+      swapAnimationDuration: const Duration(milliseconds: 1000),
+      swapAnimationCurve: Curves.elasticInOut,
+    );
   }
 }

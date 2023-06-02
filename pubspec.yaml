@@ -31,7 +31,7 @@ dev_dependencies:
 flutter_icons:
   androind: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/logo1.png"
 
 flutter:
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/providers/init.dart';
+import 'package:weather/providers/local_storage.dart';
 import 'package:weather/utils/dependencies.dart';
 
 final class SearchPlace extends StatefulWidget {
   final WeatherProvider wp;
+
   const SearchPlace({super.key, required this.wp});
 
   @override
@@ -109,7 +111,7 @@ class _SearchPlaceState extends State<SearchPlace> {
                   title: 'Caricamento...',
                   description: 'Sto mandando la richiesta al server...',
                 )
-              else
+              else if (cities['results'] != null)
                 for (Map<String, dynamic> city
                     in cities['results'] as List<dynamic>)
                   CityCard(
@@ -119,6 +121,20 @@ class _SearchPlaceState extends State<SearchPlace> {
                       country: city['country'] ?? ' ',
                       lat: city['latitude'],
                       lon: city['longitude'])
+              else
+                const Center(
+                    child: Text('No results', style: TextStyle(fontSize: 30))),
+              FutureBuilder(
+                  future: LocalStorage.getItems('Recently'),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return const Text('fatto');
+                    } else if (snapshot.hasError) {
+                      return const Text('errpre');
+                    } else {
+                      return const Text('loading');
+                    }
+                  }),
             ]),
           )),
     );

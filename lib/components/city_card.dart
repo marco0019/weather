@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/providers/init.dart';
+import 'package:weather/providers/local_storage.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class CityCard extends StatelessWidget {
@@ -26,6 +27,12 @@ class CityCard extends StatelessWidget {
     return InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         onTap: () {
+          LocalStorage.insertData('Recently',
+              place: place,
+              country: country,
+              longitude: lon,
+              latitude: lat,
+              once: true);
           weather.setData(ti: place, cCode: countryCode, lat: lat, lon: lon);
           menu.setIndex(0);
         },

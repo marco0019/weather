@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
-import 'package:weather/pages/tabs/home.dart';
 import 'package:weather/pages/init.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';

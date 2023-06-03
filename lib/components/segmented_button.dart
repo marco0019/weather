@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/providers/home_provider.dart';
+import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class SingleChoice extends StatelessWidget {
@@ -9,11 +10,7 @@ class SingleChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final home = context.watch<HomeProvider>();
-    return Container(
-        //decoration: BoxDecoration(
-        //    borderRadius: const BorderRadius.all(Radius.circular(4)),
-        //    border: Border.all(color: GLOBAL.GREY)),
-        child: Row(
+    return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -27,7 +24,7 @@ class SingleChoice extends StatelessWidget {
             onTap: () => home.range = 3,
             child: itemTextButton(context, '3hr', home.range == 3))
       ],
-    ));
+    );
   }
 
   Widget itemTextButton(

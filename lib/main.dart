@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:weather/pages/frame.dart';
 import 'package:weather/pages/init.dart';
+import 'package:weather/providers/local_storage.dart';
 import 'package:weather/providers/theme.dart';
 import 'package:weather/themes/dark.dart';
 import 'package:weather/themes/light.dart';
 import 'utils/dependencies.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  LocalStorage.db = await LocalStorage.initDB();
   await dotenv.load();
   runApp(GLOBAL.MAIN);
 }

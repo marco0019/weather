@@ -8,11 +8,20 @@ class BottomCustomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menu = context.watch<MenuProvider>();
+    final weather = context.watch<WeatherProvider>();
     return NavigationBar(
       animationDuration: const Duration(milliseconds: 400),
       height: 60,
       indicatorColor: Theme.of(context).primaryColor.withOpacity(.8),
-      onDestinationSelected: (int index) => menu.setIndex(index),
+      onDestinationSelected: (int index) {
+        if (index == 0) {
+          if (weather.latitude != null && weather.longitude != null) {
+            menu.setIndex(index);
+          }
+        } else {
+          menu.setIndex(index);
+        }
+      },
       selectedIndex: menu.currentIndex,
       destinations: const [
         NavigationDestination(

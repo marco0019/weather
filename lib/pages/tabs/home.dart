@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/air_quality.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/pages/meteogram.dart';
 import 'package:weather/providers/init.dart';
+import 'package:weather/providers/local_storage.dart';
 import '../../components/segmented_button.dart';
 import '../../utils/dependencies.dart';
 
@@ -16,20 +16,31 @@ class Home extends StatelessWidget {
     final menu = context.watch<MenuProvider>();
     return FutureBuilder(
         future: weather.fetchWeather(
-            latitude: weather.latitude, longitude: weather.longitude),
+            latitude: weather.latitude!, longitude: weather.longitude!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var value = Map<String, dynamic>.from(snapshot.data as Map);
             final limit = value['daily']['time'].length;
             return FutureBuilder(
                 future: weather.fetchAirQuality(
-                    lat: weather.latitude, lon: weather.longitude),
+                    lat: weather.latitude!, lon: weather.longitude!),
                 builder: (context, snapshot1) {
                   if (snapshot1.hasData) {
                     return CustomScrollView(
                       slivers: [
                         SliverAppBar(
-                          leading: const Icon(FontAwesomeIcons.star),
+                          leading: IconButton(
+                              onPressed: () => LocalStorage.insertData(
+                                  'PlaceSaved',
+                                  once: true,
+                                  place: weather.title,
+                                  country: 'country',
+                                  longitude: weather.longitude!,
+                                  latitude: weather.latitude!),
+                              icon: Icon(LocalStorage.contains(
+                                      'PlaceSaved', weather.title)
+                                  ? FontAwesomeIcons.solidStar
+                                  : FontAwesomeIcons.star)),
                           centerTitle: true,
                           pinned: true,
                           expandedHeight: 200,
@@ -136,27 +147,7 @@ class Home extends StatelessWidget {
                                               'temperature_2m_max',
                                               'temperature_2m_min'
                                             ]))))),
-                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        SliverToBoxAdapter(
-                            child: InkWell(
-                                onTap: () {},
-                                child: const Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Row(children: [
-                                      Text('Air quality',
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold)),
-                                      Spacer(),
-                                      Text('View all'),
-                                      SizedBox(width: 10),
-                                      Icon(FontAwesomeIcons.angleRight,
-                                          size: 15)
-                                    ])))),
-                        SliverToBoxAdapter(
-                            child: AirQuality(
-                          data: snapshot1.data!,
-                        ))
+                        const SliverToBoxAdapter(child: SizedBox(height: 80))
                       ],
                     );
                   } else if (snapshot.hasError) {

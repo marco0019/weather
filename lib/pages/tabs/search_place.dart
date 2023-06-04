@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
+import 'package:weather/components/recently_place.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/providers/local_storage.dart';
 import 'package:weather/utils/dependencies.dart';
@@ -48,10 +49,9 @@ class _SearchPlaceState extends State<SearchPlace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search')),
-      body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
+        appBar: AppBar(title: const Text('Search')),
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: ListView(children: [
               Padding(
                   padding: const EdgeInsets.all(10),
@@ -100,6 +100,22 @@ class _SearchPlaceState extends State<SearchPlace> {
                         child: const Icon(FontAwesomeIcons.paperPlane))
                   ])),
               const SizedBox(height: 16.0),
+              FutureBuilder(
+                  future: LocalStorage.getItems('Recently'),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Row(
+                          //scrollDirection: Axis.horizontal,
+                          children: [
+                            for (final item in snapshot.data!)
+                              RecentlyCard(data: item)
+                          ]);
+                    } else if (snapshot.hasError) {
+                      return const Text('errpre');
+                    } else {
+                      return const Text('loading');
+                    }
+                  }),
               if (error != '')
                 Text(error)
               else if (isLoading == null)
@@ -112,6 +128,7 @@ class _SearchPlaceState extends State<SearchPlace> {
                   description: 'Sto mandando la richiesta al server...',
                 )
               else if (cities['results'] != null)
+                //Row(children: [
                 for (Map<String, dynamic> city
                     in cities['results'] as List<dynamic>)
                   CityCard(
@@ -121,23 +138,11 @@ class _SearchPlaceState extends State<SearchPlace> {
                       country: city['country'] ?? ' ',
                       lat: city['latitude'],
                       lon: city['longitude'])
+              //])
               else
                 const Center(
                     child: Text('No results', style: TextStyle(fontSize: 30))),
-              FutureBuilder(
-                  future: LocalStorage.getItems('Recently'),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return const Text('fatto');
-                    } else if (snapshot.hasError) {
-                      return const Text('errpre');
-                    } else {
-                      return const Text('loading');
-                    }
-                  }),
-            ]),
-          )),
-    );
+            ])));
   }
 }
 /*

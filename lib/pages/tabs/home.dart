@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
                           leading: IconButton(
                               onPressed: () => LocalStorage.insertData(
                                   'PlaceSaved',
-                                  once: true,
+                                  once: false,
                                   place: weather.title,
                                   country: 'country',
                                   longitude: weather.longitude!,

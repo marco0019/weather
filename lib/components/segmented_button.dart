@@ -15,12 +15,15 @@ class SingleChoice extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         InkWell(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             onTap: () => home.range = 1,
             child: itemTextButton(context, '1hr', home.range == 1)),
         InkWell(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             onTap: () => home.range = 2,
             child: itemTextButton(context, '2hr', home.range == 2)),
         InkWell(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             onTap: () => home.range = 3,
             child: itemTextButton(context, '3hr', home.range == 3))
       ],

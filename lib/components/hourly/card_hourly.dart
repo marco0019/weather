@@ -54,7 +54,8 @@ class HourlyCard extends StatelessWidget {
           highlightColor: Theme.of(context).primaryColor.withOpacity(.4),
           customBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.withOpacity(.6))),
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          radius: 15,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           enableFeedback: false,
           onTap: () => showModalBottomSheet<void>(
               showDragHandle: true,
@@ -91,15 +92,11 @@ class HourlyCard extends StatelessWidget {
                 width: 15,
                 height: 15,
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    color: GLOBAL.GET_COLOR_OF_AQI(europeanAqi),
-                    border: Border.all(
-                        color: context.watch<ThemeModel>().isDarkMode
-                            ? Colors.grey.shade700
-                            : Colors.white30,
-                        width: 1)),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  color: GLOBAL.GET_COLOR_OF_AQI(europeanAqi),
+                ),
               ),
               const SizedBox(width: 20),
               if (rain == 0)

@@ -49,100 +49,118 @@ class _SearchPlaceState extends State<SearchPlace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Search')),
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ListView(children: [
-              Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(children: [
-                    SizedBox(
-                      width: 250,
-                      child: TextFormField(
-                        controller: _controller,
-                        cursorColor: Theme.of(context).primaryColor,
-                        decoration: InputDecoration(
-                          hintText: 'Enter a city or any place...',
-                          fillColor: Theme.of(context).primaryColor,
-                          focusColor: Theme.of(context).primaryColor,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                          contentPadding: const EdgeInsets.all(15),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Il campo non può essere vuoto';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                        autofocus: true,
-                        style: ButtonStyle(
-                            //shape: MaterialStatePropertyAll(),
-                            padding: const MaterialStatePropertyAll(
-                                EdgeInsets.all(0)),
-                            overlayColor: MaterialStatePropertyAll(
-                                Theme.of(context).primaryColor.withOpacity(.1)),
-                            shadowColor: const MaterialStatePropertyAll(
-                                Colors.transparent),
-                            foregroundColor: MaterialStatePropertyAll(
-                                Theme.of(context).primaryColor)),
-                        onPressed: () => _controller.text == ''
-                            ? null
-                            : setList(city: _controller.text),
-                        child: const Icon(FontAwesomeIcons.paperPlane))
-                  ])),
-              const SizedBox(height: 16.0),
-              FutureBuilder(
-                  future: LocalStorage.getItems('Recently'),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Row(
-                          //scrollDirection: Axis.horizontal,
-                          children: [
-                            for (final item in snapshot.data!)
-                              RecentlyCard(data: item)
-                          ]);
-                    } else if (snapshot.hasError) {
-                      return const Text('errpre');
-                    } else {
-                      return const Text('loading');
+        body: CustomScrollView(slivers: [
+      SliverAppBar(
+        leading: IconButton(
+            onPressed: () => {}, icon: const Icon(FontAwesomeIcons.star)),
+        centerTitle: true,
+        pinned: true,
+        expandedHeight: 200,
+        flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            expandedTitleScale: 2,
+            title: Text(
+              'Search',
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
+            )),
+      ),
+      SliverToBoxAdapter(
+        child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(children: [
+              SizedBox(
+                width: 250,
+                child: TextFormField(
+                  controller: _controller,
+                  cursorColor: Theme.of(context).primaryColor,
+                  decoration: InputDecoration(
+                    hintText: 'Enter a city or any place...',
+                    fillColor: Theme.of(context).primaryColor,
+                    focusColor: Theme.of(context).primaryColor,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor)),
+                    border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor)),
+                    contentPadding: const EdgeInsets.all(15),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Il campo non può essere vuoto';
                     }
-                  }),
-              if (error != '')
-                Text(error)
-              else if (isLoading == null)
-                const RandomLoading(
-                    title: 'Cerca un luogo...',
-                    description: 'Non hai ancora cercato nessuno luogo')
-              else if (isLoading!)
-                const RandomLoading(
-                  title: 'Caricamento...',
-                  description: 'Sto mandando la richiesta al server...',
-                )
-              else if (cities['results'] != null)
-                //Row(children: [
-                for (Map<String, dynamic> city
-                    in cities['results'] as List<dynamic>)
-                  CityCard(
-                      timezone: city['timezone'],
-                      countryCode: city['country_code'],
-                      place: city['name'],
-                      country: city['country'] ?? ' ',
-                      lat: city['latitude'],
-                      lon: city['longitude'])
-              //])
-              else
-                const Center(
-                    child: Text('No results', style: TextStyle(fontSize: 30))),
-            ])));
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                  autofocus: true,
+                  style: ButtonStyle(
+                      //shape: MaterialStatePropertyAll(),
+                      padding:
+                          const MaterialStatePropertyAll(EdgeInsets.all(0)),
+                      overlayColor: MaterialStatePropertyAll(
+                          Theme.of(context).primaryColor.withOpacity(.1)),
+                      shadowColor:
+                          const MaterialStatePropertyAll(Colors.transparent),
+                      foregroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).primaryColor)),
+                  onPressed: () => _controller.text == ''
+                      ? null
+                      : setList(city: _controller.text),
+                  child: const Icon(FontAwesomeIcons.paperPlane))
+            ])),
+      ),
+      const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+      SliverToBoxAdapter(
+        child: FutureBuilder(
+            future: LocalStorage.getItems('Recently'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Row(
+                    //scrollDirection: Axis.horizontal,
+                    children: [
+                      for (final item in snapshot.data!)
+                        RecentlyCard(data: item)
+                    ]);
+              } else if (snapshot.hasError) {
+                return const Text('errpre');
+              } else {
+                return const Text('loading');
+              }
+            }),
+      ),
+      if (error != '')
+        Text(error)
+      else if (isLoading == null)
+        const SliverToBoxAdapter(
+          child: RandomLoading(
+              title: 'Cerca un luogo...',
+              description: 'Non hai ancora cercato nessuno luogo'),
+        )
+      else if (isLoading!)
+        const SliverToBoxAdapter(
+          child: RandomLoading(
+            title: 'Caricamento...',
+            description: 'Sto mandando la richiesta al server...',
+          ),
+        )
+      else if (cities['results'] != null)
+        for (Map<String, dynamic> city in cities['results'] as List<dynamic>)
+          SliverToBoxAdapter(
+            child: CityCard(
+                timezone: city['timezone'],
+                countryCode: city['country_code'],
+                place: city['name'],
+                country: city['country'] ?? ' ',
+                lat: city['latitude'],
+                lon: city['longitude']),
+          )
+      else
+        const Center(child: Text('No results', style: TextStyle(fontSize: 30))),
+      const SliverToBoxAdapter(child: SizedBox(height: 80))
+    ]));
   }
 }
 /*

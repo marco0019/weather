@@ -45,6 +45,7 @@ class LocalStorage {
     db.query(table,
         where: 'place = ?',
         whereArgs: [place]).then((value) => isInserted = value.isNotEmpty);
+    debugPrint('$table:  $isInserted');
     return isInserted;
   }
 

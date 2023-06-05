@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather/providers/init.dart';
+import 'package:weather/providers/local_storage.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class RecentlyCard extends StatelessWidget {
@@ -23,13 +24,24 @@ class RecentlyCard extends StatelessWidget {
             lon: data['longitude']);
         menu.setIndex(0);
       },
+      onLongPress: () {
+        LocalStorage.delete(table: 'Recently', id: data['id'] as int);
+        weather.setRecentlyPlaces();
+      },
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
+            ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Image.asset(
+                    'icons/flags/png/${data['country'].trim().toLowerCase()}.png',
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                    package: 'country_icons')),
+            const SizedBox(width: 5),
             Text(data['place']),
-            const Icon(FontAwesomeIcons.receipt),
-            const SizedBox(width: 10),
           ],
         ),
       ),

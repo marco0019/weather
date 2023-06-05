@@ -9,6 +9,28 @@ class BottomCustomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final menu = context.watch<MenuProvider>();
     final weather = context.watch<WeatherProvider>();
+    var tabs = [
+      {
+        'title': 'Home',
+        'icon': FontAwesomeIcons.house,
+        'selectedIcon': FontAwesomeIcons.house,
+      },
+      {
+        'title': 'Search',
+        'icon': FontAwesomeIcons.magnifyingGlass,
+        'selectedIcon': FontAwesomeIcons.magnifyingGlass,
+      },
+      {
+        'title': 'Saved',
+        'icon': Icons.bookmark,
+        'selectedIcon': Icons.bookmark_border,
+      },
+      {
+        'title': 'Settings',
+        'icon': FontAwesomeIcons.gear,
+        'selectedIcon': FontAwesomeIcons.gear
+      },
+    ];
     return NavigationBar(
       animationDuration: const Duration(milliseconds: 400),
       height: 60,
@@ -23,25 +45,14 @@ class BottomCustomBar extends StatelessWidget {
         }
       },
       selectedIndex: menu.currentIndex,
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(FontAwesomeIcons.house),
-          label: 'Home',
-        ),
-        NavigationDestination(
-          icon: Icon(FontAwesomeIcons.magnifyingGlass),
-          label: 'Search',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.bookmark),
-          icon: Icon(Icons.bookmark_border),
-          label: 'Saved',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(FontAwesomeIcons.gear),
-          icon: Icon(FontAwesomeIcons.gear),
-          label: 'Settings',
-        ),
+      destinations: [
+        for (int i = 0; i < tabs.length; i++)
+          NavigationDestination(
+            icon: Icon(tabs[i]['icon'] as IconData),
+            selectedIcon:
+                Icon(tabs[i]['icon'] as IconData, color: Colors.white),
+            label: tabs[i]['title'] as String,
+          ),
       ],
     );
   }

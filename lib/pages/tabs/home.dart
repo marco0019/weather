@@ -34,7 +34,7 @@ class Home extends StatelessWidget {
                                   'PlaceSaved',
                                   once: false,
                                   place: weather.title,
-                                  country: 'country',
+                                  country: weather.countryCode,
                                   longitude: weather.longitude!,
                                   latitude: weather.latitude!),
                               icon: Icon(LocalStorage.contains(
@@ -153,7 +153,7 @@ class Home extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('${snapshot.error}'));
                   }
-                  return Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION());
+                  return const LinearProgressIndicator();
                 });
           } else if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));

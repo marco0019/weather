@@ -27,7 +27,7 @@ class LocalStorage {
       required double longitude,
       required double latitude,
       required bool once}) async {
-    if ((once && !contains(table, place) || !once)) {
+    if ((once && !contains(table, place)) || !once) {
       await db.insert(
           table,
           {
@@ -42,13 +42,17 @@ class LocalStorage {
 
   static bool contains(String table, String place) {
     bool isInserted = true;
-    db.query(table,
-        where: 'place = ?',
-        whereArgs: [place]).then((value) => isInserted = value.isNotEmpty);
+    db
+        .query(table, where: "place = '$place'")
+        .then((value) => isInserted = value.isNotEmpty);
     debugPrint('$table:  $isInserted');
     return isInserted;
   }
 
   static Future<List<Map<String, dynamic>>> getItems(String table) async =>
       await db.query(table);
+
+  static Future<void> delete({required String table, required int id}) async {
+    await db.delete(table, where: "id = $id");
+  }
 }

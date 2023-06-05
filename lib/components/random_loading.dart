@@ -16,7 +16,7 @@ class RandomLoading extends StatelessWidget {
             style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center),
         Text(description, textAlign: TextAlign.center),
-        Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION()),
+        //Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION()),
       ]));
 }
 /*

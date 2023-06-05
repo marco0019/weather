@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:weather/providers/local_storage.dart';
 import '../utils/dependencies.dart';
 
 class WeatherProvider with ChangeNotifier {
@@ -9,6 +10,8 @@ class WeatherProvider with ChangeNotifier {
   double? latitude;
   double? longitude;
   late Future<Map<String, dynamic>> weather;
+  late Future<List<Map<String, dynamic>>> recentlyPlace;
+  late Future<List<Map<String, dynamic>>> savedPlaces;
 
   void setData(
       {required String ti,
@@ -19,6 +22,16 @@ class WeatherProvider with ChangeNotifier {
     countryCode = cCode;
     latitude = lat;
     longitude = lon;
+    notifyListeners();
+  }
+
+  void setRecentlyPlaces() {
+    recentlyPlace = LocalStorage.getItems('Recently');
+    notifyListeners();
+  }
+
+  void setSavedPlaces() {
+    savedPlaces = LocalStorage.getItems('PlaceSaved');
     notifyListeners();
   }
 

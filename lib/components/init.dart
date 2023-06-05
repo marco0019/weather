@@ -8,6 +8,5 @@ export 'daily/current_day.dart';
 export 'daily/daily_list_horizontal.dart';
 export 'hourly/hourly_list.dart';
 export 'change_theme.dart';
-export 'save_weather.dart';
 export 'random_loading.dart';
 export 'bottom_navigation_bar.dart';

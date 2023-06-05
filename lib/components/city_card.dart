@@ -29,10 +29,10 @@ class CityCard extends StatelessWidget {
         onTap: () {
           LocalStorage.insertData('Recently',
               place: place,
-              country: country,
+              country: countryCode,
               longitude: lon,
               latitude: lat,
-              once: true);
+              once: false);
           weather.setData(ti: place, cCode: countryCode, lat: lat, lon: lon);
           menu.setIndex(0);
         },

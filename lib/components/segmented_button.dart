@@ -30,12 +30,14 @@ class SingleChoice extends StatelessWidget {
     );
   }
 
-  Widget itemTextButton(
-          BuildContext ctx, String label, bool isActive) =>
+  Widget itemTextButton(BuildContext ctx, String label, bool isActive) =>
       Container(
           decoration: BoxDecoration(
               color: isActive ? Theme.of(ctx).primaryColor : null,
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           padding: const EdgeInsets.all(10),
-          child: Text(label));
+          child: Text(
+            label,
+            style: TextStyle(color: isActive ? Colors.white : null),
+          ));
 }

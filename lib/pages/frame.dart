@@ -19,7 +19,7 @@ class _FrameState extends State<Frame> {
     final List<Widget> pages = [
       const Home(),
       SearchPlace(wp: weather),
-      const PlacesSaved(),
+      PlacesSaved(wp: weather),
       const Settings()
     ];
     return DefaultTabController(

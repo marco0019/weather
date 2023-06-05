@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../utils/dependencies.dart';
-import 'package:sqflite/sqflite.dart';
 
 class WeatherProvider with ChangeNotifier {
   String title = 'placeholder';

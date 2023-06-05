@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather/components/charts/chart_line.dart';
 
 class MeteoGram extends StatelessWidget {
@@ -11,74 +9,6 @@ class MeteoGram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> graphs = [
-      {
-        'title': 'Temperature',
-        'source': 'temperature_2m',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': false,
-      },
-      {
-        'title': 'Apparent temperature',
-        'source': 'apparent_temperature',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': false,
-      },
-      {
-        'title': 'Precipitation',
-        'source': 'precipitation',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': false,
-      },
-      {
-        'title': 'Humidity',
-        'source': 'relativehumidity_2m',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': false,
-      },
-      {
-        'title': 'Surface pressure',
-        'source': 'surface_pressure',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': false,
-      },
-      {
-        'title': 'Ozone',
-        'source': 'ozone',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      },
-      {
-        'title': 'PM 10',
-        'source': 'pm10',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      },
-      {
-        'title': 'PM 2.5',
-        'source': 'pm2_5',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      },
-      {
-        'title': 'Nitrogen dioxide',
-        'source': 'nitrogen_dioxide',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      },
-      {
-        'title': 'Sulphur dioxide',
-        'source': 'sulphur_dioxide',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      },
-      {
-        'title': 'European AQI',
-        'source': 'european_aqi',
-        'gradient': const LinearGradient(colors: [Colors.white, Colors.green]),
-        'isAir': true,
-      }
-    ];
     return Scaffold(
         body: CustomScrollView(slivers: [
       SliverAppBar(

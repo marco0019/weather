@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather/components/hourly/info_hourly.dart';
-import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class HourlyCard extends StatelessWidget {

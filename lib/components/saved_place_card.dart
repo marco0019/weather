@@ -11,29 +11,29 @@ class PlaceSavedCard extends StatelessWidget {
   const PlaceSavedCard({super.key, required this.data});
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onLongPress: () {
-        LocalStorage.delete(table: 'PlaceSaved', id: data['id']);
-        context.read<WeatherProvider>().setSavedPlaces();
-      },
-      child: Row(children: [
-        ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(0)),
-            child: Image.asset(
-                'icons/flags/png/${data['country'].trim().toLowerCase()}.png',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-                package: 'country_icons')),
-        const SizedBox(width: 15),
-        Text(data['place'], style: const TextStyle(fontSize: 30)),
-        const Spacer(),
-        OutlinedButton.icon(
-            onPressed: () {},
-            icon: const Icon(FontAwesomeIcons.solidSave),
-            label: const Text('Saved'))
-      ]),
-    );
-  }
+  Widget build(BuildContext context) => InkWell(
+        onLongPress: () {
+          LocalStorage.delete(table: 'PlaceSaved', id: data['id']);
+          context.read<WeatherProvider>().setSavedPlaces(notify: true);
+        },
+        child: Card(
+          child: Row(children: [
+            ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Image.asset(
+                    'icons/flags/png/${data['country'].trim().toLowerCase()}.png',
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                    package: 'country_icons')),
+            const SizedBox(width: 15),
+            Text(data['place'], style: const TextStyle(fontSize: 30)),
+            const Spacer(),
+            OutlinedButton.icon(
+                onPressed: () {},
+                icon: const Icon(FontAwesomeIcons.solidSave),
+                label: const Text('Saved'))
+          ]),
+        ),
+      );
 }

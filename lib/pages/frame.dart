@@ -15,7 +15,6 @@ class _FrameState extends State<Frame> {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
-    final menu = context.watch<MenuProvider>();
     final List<Widget> pages = [
       const Home(),
       SearchPlace(wp: weather),
@@ -28,7 +27,7 @@ class _FrameState extends State<Frame> {
           resizeToAvoidBottomInset: false,
           extendBody: true,
           bottomNavigationBar: const BottomCustomBar(),
-          body: pages[menu.currentIndex],
+          body: pages[weather.currentIndex],
         ));
   }
 }

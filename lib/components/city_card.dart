@@ -23,7 +23,6 @@ class CityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weather = context.read<WeatherProvider>();
-    final menu = context.read<MenuProvider>();
     return InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         onTap: () {
@@ -34,7 +33,7 @@ class CityCard extends StatelessWidget {
               latitude: lat,
               once: false);
           weather.setData(ti: place, cCode: countryCode, lat: lat, lon: lon);
-          menu.setIndex(0);
+          weather.setIndex(0);
         },
         child: Container(
             padding: const EdgeInsets.all(10),

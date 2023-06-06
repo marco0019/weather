@@ -23,6 +23,8 @@ dependencies:
   sqflite: ^2.2.8+4
   path_provider: ^2.0.15
   path: ^1.8.3
+  google_nav_bar: ^5.0.6
+  line_awesome_flutter: ^2.0.0
 
 
 dev_dependencies:
@@ -68,4 +70,6 @@ flutter:
     - assets/loadings/3.json
     - assets/loadings/4.json
     - assets/loadings/5.json
+    - assets/loadings/6.json
+    - assets/loadings/7.json
     - .env

@@ -50,14 +50,19 @@ class _SearchPlaceState extends State<SearchPlace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(centerTitle: true, title: const Text('Search')),
+        appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              'Search',
+              style: TextStyle(fontSize: 30),
+            )),
         body: CustomScrollView(slivers: [
           SliverToBoxAdapter(
             child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Row(children: [
                   SizedBox(
-                    width: 275,
+                    width: 300,
                     child: TextFormField(
                       controller: _controller,
                       cursorColor: Theme.of(context).primaryColor,
@@ -100,15 +105,14 @@ class _SearchPlaceState extends State<SearchPlace> {
                       child: const Icon(FontAwesomeIcons.paperPlane))
                 ])),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
           SliverToBoxAdapter(
             child: FutureBuilder(
                 future: widget.wp.recentlyPlace,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Container(
+                    return SizedBox(
                       //color: Colors.green,
-                      height: 40,
+                      height: 50,
                       //width: 200,
                       child: ListView(
                           scrollDirection: Axis.horizontal,
@@ -124,6 +128,8 @@ class _SearchPlaceState extends State<SearchPlace> {
                   }
                 }),
           ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+          const SliverToBoxAdapter(child: Divider()),
           if (error != '')
             Text(error)
           else if (isLoading == null)
@@ -133,12 +139,7 @@ class _SearchPlaceState extends State<SearchPlace> {
                   description: 'Non hai ancora cercato nessuno luogo'),
             )
           else if (isLoading!)
-            const SliverToBoxAdapter(
-              child: RandomLoading(
-                title: 'Caricamento...',
-                description: 'Sto mandando la richiesta al server...',
-              ),
-            )
+            const SliverToBoxAdapter(child: LinearProgressIndicator())
           else if (cities['results'] != null)
             for (Map<String, dynamic> city
                 in cities['results'] as List<dynamic>)

@@ -12,27 +12,58 @@ class WeatherProvider with ChangeNotifier {
   late Future<Map<String, dynamic>> weather;
   late Future<List<Map<String, dynamic>>> recentlyPlace;
   late Future<List<Map<String, dynamic>>> savedPlaces;
+  int _currentIndex = 1;
+
+  int get currentIndex => _currentIndex;
+
+  set currentIndex(value) {
+    _currentIndex = value;
+    notifyListeners();
+  }
+
+  void setIndex(int value) {
+    currentIndex = value;
+  }
+
+  WeatherProvider() {
+    initData();
+  }
+
+  void initData() async {
+    List<Map<String, dynamic>> places = await LocalStorage.getItems('Recently');
+    debugPrint(places.toString());
+    if (places.isNotEmpty) {
+      setData(
+          ti: places[0]['place'],
+          cCode: places[0]['country'],
+          lat: places[0]['latitude'],
+          lon: places[0]['longitude'],
+          notify: false);
+      setIndex(0);
+    }
+  }
 
   void setData(
       {required String ti,
       required String cCode,
       required double lat,
-      required double lon}) {
+      required double lon,
+      bool notify = true}) {
     title = ti;
     countryCode = cCode;
     latitude = lat;
     longitude = lon;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 
-  void setRecentlyPlaces() {
+  void setRecentlyPlaces({bool notify = false}) {
     recentlyPlace = LocalStorage.getItems('Recently');
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 
-  void setSavedPlaces() {
+  void setSavedPlaces({bool notify = false}) {
     savedPlaces = LocalStorage.getItems('PlaceSaved');
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 
   Future<Map<String, dynamic>> fetchWeather(
@@ -53,7 +84,7 @@ class WeatherProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> fetchMapsGeoCoding(String city,
-      {int limit = 10, String language = 'en'}) async {
+      {int limit = 10, String language = 'it'}) async {
     final response = await get(Uri.parse(
         '${dotenv.env['API_GEOCODING_BASE_URL']}?name=$city&count=$limit&language=$language&format=json'));
     if (response.statusCode == 200) {

@@ -130,12 +130,11 @@ class HourlyInfo extends StatelessWidget {
                     animation: true,
                     animationDuration: 1000,
                     curve: Curves.bounceInOut,
-                    progressColor: GLOBAL.GET_IQA_INFO(aqi ?? 0)['color'],
+                    progressColor: GLOBAL.GET_COLOR_OF_AQI(aqi ?? 0),
                     backgroundColor:
-                        (GLOBAL.GET_IQA_INFO(aqi ?? 0)['color'] as Color)
-                            .withAlpha(75),
+                        GLOBAL.GET_COLOR_OF_AQI(aqi ?? 0).withAlpha(75),
                     radius: 90,
-                    percent: (100 - (aqi ?? 0)) / 100,
+                    percent: (aqi ?? 0) / 100,
                     lineWidth: 25,
                     circularStrokeCap: CircularStrokeCap.round,
                     center: Text((aqi ?? '0').toString(),

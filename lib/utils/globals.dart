@@ -11,8 +11,7 @@ class GLOBAL {
   static List<SingleChildWidget> PROVIDERS = [
     ChangeNotifierProvider(create: (_) => WeatherProvider()),
     ChangeNotifierProvider(create: (_) => ThemeModel()),
-    ChangeNotifierProvider(create: (_) => HomeProvider()),
-    ChangeNotifierProvider(create: (_) => MenuProvider())
+    ChangeNotifierProvider(create: (_) => HomeProvider())
   ];
   static Map<String, Widget Function(BuildContext)> ROUTES = {
     '/home': (context) => const Frame()
@@ -123,8 +122,8 @@ class GLOBAL {
     return 0;
   }
 
-  static String GET_RANDOM_LOADING_ANIMATION() =>
-      'assets/loadings/${RAND.nextInt(5) + 1}.json';
+  static String GET_RANDOM_LOADING_ANIMATION({int min = 0, int max = 7}) =>
+      'assets/loadings/${RAND.nextInt(max - min) + 1 + min}.json';
 
   static String CONCAT_WITH_SPLIT(String text,
       {required List<int> include,

@@ -13,7 +13,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
     final day = context.watch<HomeProvider>();
-    final menu = context.watch<MenuProvider>();
     return FutureBuilder(
         future: weather.fetchWeather(
             latitude: weather.latitude!, longitude: weather.longitude!),
@@ -29,18 +28,19 @@ class Home extends StatelessWidget {
                     return CustomScrollView(
                       slivers: [
                         SliverAppBar(
-                          leading: IconButton(
-                              onPressed: () => LocalStorage.insertData(
-                                  'PlaceSaved',
-                                  once: false,
-                                  place: weather.title,
-                                  country: weather.countryCode,
-                                  longitude: weather.longitude!,
-                                  latitude: weather.latitude!),
-                              icon: Icon(LocalStorage.contains(
-                                      'PlaceSaved', weather.title)
-                                  ? FontAwesomeIcons.solidStar
-                                  : FontAwesomeIcons.star)),
+                          leading: FutureBuilder(
+                              future: LocalStorage.contains('PlaceSaved',
+                                  latitude: weather.latitude!,
+                                  longitude: weather.longitude!),
+                              builder: (context, contain) => IconButton(
+                                  onPressed: () => LocalStorage.insertData(
+                                      'PlaceSaved',
+                                      place: weather.title,
+                                      country: weather.countryCode,
+                                      longitude: weather.longitude!,
+                                      latitude: weather.latitude!,
+                                      once: true),
+                                  icon: const Icon(Icons.add))),
                           centerTitle: true,
                           pinned: true,
                           expandedHeight: 200,
@@ -48,7 +48,7 @@ class Home extends StatelessWidget {
                               centerTitle: true,
                               expandedTitleScale: 2,
                               title: InkWell(
-                                  onTap: () => menu.setIndex(1),
+                                  onTap: () => weather.setIndex(1),
                                   child: Text(
                                     weather.title.toUpperCase(),
                                     style: TextStyle(
@@ -158,7 +158,18 @@ class Home extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));
           }
-          return Lottie.asset(GLOBAL.GET_RANDOM_LOADING_ANIMATION());
+          return const LinearProgressIndicator();
         });
+  }
+
+  Widget iconFromSnapshot(snapshot) {
+    if (snapshot.hasData) {
+      if (snapshot.data!) {
+        return const Icon(FontAwesomeIcons.solidStar);
+      } else {
+        return const Icon(FontAwesomeIcons.star);
+      }
+    }
+    return const Icon(FontAwesomeIcons.star);
   }
 }

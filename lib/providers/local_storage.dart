@@ -12,12 +12,16 @@ class LocalStorage {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       place TEXT NOT NULL, country TEXT NOT NULL,
       latitude REAL NOT NULL,
-      longitude REAL NOT NULL)""");
+      longitude REAL NOT NULL,
+      date TEXT DEFAULT (STRFTIME('%Y-%m-%d', 'now', 'localtime')),
+      UNIQUE (latitude, longitude))""");
       await database.execute("""CREATE TABLE PlaceSaved(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       place TEXT NOT NULL, country TEXT NOT NULL,
       latitude REAL NOT NULL,
-        longitude REAL NOT NULL)""");
+      longitude REAL NOT NULL,
+      date TEXT DEFAULT (STRFTIME('%Y-%m-%d', 'now', 'localtime')),
+      UNIQUE (latitude, longitude))""");
     });
   }
 
@@ -27,32 +31,34 @@ class LocalStorage {
       required double longitude,
       required double latitude,
       required bool once}) async {
-    if ((once && !contains(table, place)) || !once) {
-      await db.insert(
-          table,
-          {
-            'place': place,
-            'country': country,
-            'latitude': latitude,
-            'longitude': longitude
-          },
-          conflictAlgorithm: ConflictAlgorithm.replace);
-    }
+    //if ((once && !contains(table, place)) || !once) {
+    await db.insert(
+        table,
+        {
+          'place': place,
+          'country': country,
+          'latitude': latitude,
+          'longitude': longitude,
+          'date': DateTime.now().toIso8601String()
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    //}
   }
 
-  static bool contains(String table, String place) {
-    bool isInserted = true;
-    db
-        .query(table, where: "place = '$place'")
-        .then((value) => isInserted = value.isNotEmpty);
-    debugPrint('$table:  $isInserted');
-    return isInserted;
+  static Future<bool> contains(String table,
+      {required double latitude, required double longitude}) async {
+    final result = await db.query(
+      table,
+      where: 'latitude = ? AND longitude = ?',
+      whereArgs: [latitude, longitude],
+      limit: 1,
+    );
+    return result.isNotEmpty;
   }
 
   static Future<List<Map<String, dynamic>>> getItems(String table) async =>
-      await db.query(table);
+      await db.query(table, orderBy: 'date DESC');
 
-  static Future<void> delete({required String table, required int id}) async {
-    await db.delete(table, where: "id = $id");
-  }
+  static Future<void> delete({required String table, required int id}) async =>
+      await db.delete(table, where: "id = $id");
 }

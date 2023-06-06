@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 
@@ -7,7 +9,6 @@ class BottomCustomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menu = context.watch<MenuProvider>();
     final weather = context.watch<WeatherProvider>();
     var tabs = [
       {
@@ -31,7 +32,38 @@ class BottomCustomBar extends StatelessWidget {
         'selectedIcon': FontAwesomeIcons.gear
       },
     ];
-    return NavigationBar(
+    return GNav(
+        //rippleColor: Colors.grey[300]!,
+        //hoverColor: Colors.grey[100]!,
+        gap: 8,
+        backgroundColor: Colors.grey.withOpacity(.25),
+        //activeColor: Colors.black,
+        iconSize: 24,
+        haptic: true,
+        tabMargin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        duration: const Duration(milliseconds: 400),
+        //tabBackgroundColor: Colors.grey[100]!,
+        //tabBackgroundColor: Colors.grey[100]!,
+        //tabActiveBorder: Border.all(),
+        //color: Colors.black,
+        selectedIndex: weather.currentIndex,
+        onTabChange: (int index) {
+          if (index != 0) {
+            weather.setIndex(index);
+          } else if (weather.latitude != null && weather.longitude != null) {
+            weather.setIndex(index);
+          }
+        },
+        tabs: [
+          for (int i = 0; i < tabs.length; i++)
+            GButton(
+                icon: tabs[i]['icon'] as IconData,
+                text: tabs[i]['title'] as String)
+        ]);
+  }
+}
+/*NavigationBar(
       animationDuration: const Duration(milliseconds: 400),
       height: 60,
       indicatorColor: Theme.of(context).primaryColor.withOpacity(.8),
@@ -53,89 +85,5 @@ class BottomCustomBar extends StatelessWidget {
                 Icon(tabs[i]['icon'] as IconData, color: Colors.white),
             label: tabs[i]['title'] as String,
           ),
-      ],
-    );
-  }
-}
-/*
-SafeArea(
-        child: Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-            height: 75,
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: const BorderRadius.all(Radius.circular(24))),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                      width: 36,
-                      height: 36,
-                      child: IconButton(
-                          color: menu.currentIndex == 1
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                          onPressed: () {
-                            menu.setIndex(0);
-                          },
-                          icon: const Icon(FontAwesomeIcons.house))),
-                  SizedBox(
-                      width: 36,
-                      height: 36,
-                      child: IconButton(
-                          color: menu.currentIndex == 1
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                          onPressed: () {
-                            menu.setIndex(1);
-                          },
-                          icon: const Icon(FontAwesomeIcons.magnifyingGlass))),
-                  SizedBox(
-                      width: 36,
-                      height: 36,
-                      child: IconButton(
-                          color: menu.currentIndex == 1
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                          onPressed: () {
-                            menu.setIndex(2);
-                          },
-                          icon: const Icon(FontAwesomeIcons.bookmark))),
-                  SizedBox(
-                      width: 36,
-                      height: 36,
-                      child: IconButton(
-                          color: menu.currentIndex == 1
-                              ? Theme.of(context).primaryColor
-                              : Colors.white,
-                          onPressed: () {
-                            menu.setIndex(3);
-                          },
-                          icon: const Icon(FontAwesomeIcons.gear))),
-                ])));
-NavigationBar(
-      height: 60,
-      onDestinationSelected: (int index) => menu.setIndex(index),
-      selectedIndex: menu.currentIndex,
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(FontAwesomeIcons.house),
-          label: 'Home',
-        ),
-        NavigationDestination(
-          icon: Icon(FontAwesomeIcons.magnifyingGlass),
-          label: 'Search',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.bookmark),
-          icon: Icon(Icons.bookmark_border),
-          label: 'Saved',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(FontAwesomeIcons.gear),
-          icon: Icon(FontAwesomeIcons.gear),
-          label: 'Settings',
-        ),
       ],
     );*/

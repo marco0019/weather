@@ -11,29 +11,44 @@ class PlaceSavedCard extends StatelessWidget {
   const PlaceSavedCard({super.key, required this.data});
 
   @override
-  Widget build(BuildContext context) => InkWell(
-        onLongPress: () {
-          LocalStorage.delete(table: 'PlaceSaved', id: data['id']);
-          context.read<WeatherProvider>().setSavedPlaces(notify: true);
+  Widget build(BuildContext context) {
+    final weather = context.watch<WeatherProvider>();
+    return Card(
+      child: InkWell(
+        radius: 10,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        onTap: () {
+          weather.setData(
+              ti: data['place'],
+              cCode: data['country'],
+              lat: data['latitude'],
+              lon: data['longitude']);
+          weather.setIndex(0);
         },
-        child: Card(
-          child: Row(children: [
-            ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
+        child: Row(children: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(40)),
                 child: Image.asset(
                     'icons/flags/png/${data['country'].trim().toLowerCase()}.png',
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
                     package: 'country_icons')),
-            const SizedBox(width: 15),
-            Text(data['place'], style: const TextStyle(fontSize: 30)),
-            const Spacer(),
-            OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(FontAwesomeIcons.solidSave),
-                label: const Text('Saved'))
-          ]),
-        ),
-      );
+          ),
+          const SizedBox(width: 15),
+          Text(data['place'], style: const TextStyle(fontSize: 30)),
+          const Spacer(),
+          IconButton.outlined(
+              onPressed: () {
+                LocalStorage.delete(table: 'PlaceSaved', id: data['id']);
+                weather.setSavedPlaces(notify: true);
+              },
+              icon: const Icon(FontAwesomeIcons.trash)),
+          const SizedBox(width: 15)
+        ]),
+      ),
+    );
+  }
 }

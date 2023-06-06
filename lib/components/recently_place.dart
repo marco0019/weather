@@ -17,11 +17,13 @@ class RecentlyCard extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       onTap: () {
         weather.setData(
+            // Aggiorno i dati per la home
             ti: data['place'],
             cCode: data['country'],
             lat: data['latitude'],
             lon: data['longitude']);
-        weather.setIndex(0);
+        LocalStorage.updateDate('Recently', data['id']);
+        weather.setIndex(0); // cambio pagina
       },
       onLongPress: () {
         LocalStorage.delete(table: 'Recently', id: data['id'] as int);

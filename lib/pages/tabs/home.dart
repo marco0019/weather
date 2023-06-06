@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                                       longitude: weather.longitude!,
                                       latitude: weather.latitude!,
                                       once: true),
-                                  icon: const Icon(Icons.add))),
+                                  icon: iconFromSnapshot(contain))),
                           centerTitle: true,
                           pinned: true,
                           expandedHeight: 200,

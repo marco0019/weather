@@ -134,10 +134,11 @@ class _SearchPlaceState extends State<SearchPlace> {
             Text(error)
           else if (isLoading == null)
             const SliverToBoxAdapter(
-              child: RandomLoading(
-                  title: 'Cerca un luogo...',
-                  description: 'Non hai ancora cercato nessuno luogo'),
-            )
+                child: RandomLoading(
+                    title: 'Cerca un luogo...',
+                    description: 'Non hai ancora cercato nessuno luogo',
+                    min: 6,
+                    max: 7))
           else if (isLoading!)
             const SliverToBoxAdapter(child: LinearProgressIndicator())
           else if (cities['results'] != null)

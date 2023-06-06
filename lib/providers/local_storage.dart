@@ -61,4 +61,9 @@ class LocalStorage {
 
   static Future<void> delete({required String table, required int id}) async =>
       await db.delete(table, where: "id = $id");
+
+  static Future<void> updateDate(String table, int id) async {
+    await db.update(table, {'date': DateTime.now().toIso8601String()},
+        where: 'id = ?', whereArgs: [id]);
+  }
 }

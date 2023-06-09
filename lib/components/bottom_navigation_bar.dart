@@ -33,8 +33,8 @@ class BottomCustomBar extends StatelessWidget {
       },
     ];
     return GNav(
-        //rippleColor: Colors.grey[300]!,
-        //hoverColor: Colors.grey[100]!,
+      //rippleColor: Colors.grey[300]!,
+      //hoverColor: Colors.grey[100]!,
         gap: 8,
         backgroundColor: Colors.grey.withOpacity(.25),
         //activeColor: Colors.black,
@@ -51,8 +51,12 @@ class BottomCustomBar extends StatelessWidget {
         onTabChange: (int index) {
           if (index != 0) {
             weather.setIndex(index);
-          } else if (weather.latitude != null && weather.longitude != null) {
+          }
+          else if (weather.latitude != null && weather.longitude != null) {
             weather.setIndex(index);
+          }
+          else {
+            weather.setIndex(0);
           }
         },
         tabs: [

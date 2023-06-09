@@ -26,7 +26,10 @@ class WeatherProvider with ChangeNotifier {
   }
 
   WeatherProvider() {
-    initData();
+    if (LocalStorage.db.isOpen) {
+      LocalStorage.initTabla();
+      initData();
+    }
   }
 
   void initData() async {

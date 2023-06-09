@@ -6,31 +6,35 @@ class LocalStorage {
 
   static Future<Database> initDB() async {
     //String path = await getDatabasesPath();
-    return openDatabase('places.db', version: 1,
+    return openDatabase('storage.db', version: 1,
         onCreate: (database, version) async {
-      await database.execute("""CREATE TABLE Recently(
+          await database.execute("""CREATE TABLE Recently(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       place TEXT NOT NULL, country TEXT NOT NULL,
       latitude REAL NOT NULL,
       longitude REAL NOT NULL,
       date TEXT DEFAULT (STRFTIME('%Y-%m-%d', 'now', 'localtime')),
       UNIQUE (latitude, longitude))""");
-      await database.execute("""CREATE TABLE PlaceSaved(
+          await database.execute("""CREATE TABLE PlaceSaved(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       place TEXT NOT NULL, country TEXT NOT NULL,
       latitude REAL NOT NULL,
       longitude REAL NOT NULL,
       date TEXT DEFAULT (STRFTIME('%Y-%m-%d', 'now', 'localtime')),
       UNIQUE (latitude, longitude))""");
-    });
+        });
+  }
+
+  static Future<void> initTabla() async {
+
   }
 
   static Future<void> insertData(String table,
       {required String place,
-      required String country,
-      required double longitude,
-      required double latitude,
-      required bool once}) async {
+        required String country,
+        required double longitude,
+        required double latitude,
+        required bool once}) async {
     //if ((once && !contains(table, place)) || !once) {
     await db.insert(
         table,

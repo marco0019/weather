@@ -48,7 +48,7 @@ class _PlacesSavedState extends State<PlacesSaved> {
                 PlaceSavedCard(data: place)
             ]);
           } else if (snapshot.hasError) {
-            return const Text('errore');
+            return Text(snapshot.error.toString());
           }
           return const Text('loading');
         },

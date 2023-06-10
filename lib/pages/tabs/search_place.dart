@@ -78,12 +78,6 @@ class _SearchPlaceState extends State<SearchPlace> {
                                 color: Theme.of(context).primaryColor)),
                         contentPadding: const EdgeInsets.all(15),
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Il campo non può essere vuoto';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -140,7 +134,7 @@ class _SearchPlaceState extends State<SearchPlace> {
                     min: 6,
                     max: 7))
           else if (isLoading!)
-            const SliverToBoxAdapter(child: LinearProgressIndicator())
+            const SliverToBoxAdapter(child: CircularProgressIndicator())
           else if (cities['results'] != null)
             for (Map<String, dynamic> city
                 in cities['results'] as List<dynamic>)
@@ -154,8 +148,10 @@ class _SearchPlaceState extends State<SearchPlace> {
                     lon: city['longitude']),
               )
           else
-            const Center(
-                child: Text('No results', style: TextStyle(fontSize: 30))),
+            const SliverToBoxAdapter(
+              child: Center(
+                  child: Text('No results', style: TextStyle(fontSize: 30))),
+            ),
           const SliverToBoxAdapter(child: SizedBox(height: 80))
         ]));
   }

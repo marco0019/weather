@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weather/components/init.dart';
 import 'package:weather/components/recently_place.dart';
 import 'package:weather/providers/init.dart';
-import 'package:weather/providers/local_storage.dart';
-import 'package:weather/utils/dependencies.dart';
 
 final class SearchPlace extends StatefulWidget {
   final WeatherProvider wp;
@@ -36,15 +34,15 @@ class _SearchPlaceState extends State<SearchPlace> {
   void initState() {
     super.initState();
     widget.wp.setRecentlyPlaces();
-    /*_controller.addListener(() {
-      if (_controller.text != '') setList(city: _controller.text);
-    });*/
+    _controller.addListener(() {
+      if (_controller.text.length > 2) setList(city: _controller.text);
+    });
   }
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,44 +58,22 @@ class _SearchPlaceState extends State<SearchPlace> {
           SliverToBoxAdapter(
             child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Row(children: [
-                  SizedBox(
-                    width: 300,
-                    child: TextFormField(
-                      controller: _controller,
-                      cursorColor: Theme.of(context).primaryColor,
-                      decoration: InputDecoration(
-                        hintText: 'Enter a city or any place...',
-                        fillColor: Theme.of(context).primaryColor,
-                        focusColor: Theme.of(context).primaryColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor)),
-                        contentPadding: const EdgeInsets.all(15),
-                      ),
-                    ),
+                child: TextFormField(
+                  controller: _controller,
+                  cursorColor: Theme.of(context).primaryColor,
+                  decoration: InputDecoration(
+                    hintText: 'Enter a city or any place...',
+                    fillColor: Theme.of(context).primaryColor,
+                    focusColor: Theme.of(context).primaryColor,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor)),
+                    border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor)),
+                    contentPadding: const EdgeInsets.all(15),
                   ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                      autofocus: true,
-                      style: ButtonStyle(
-                          //shape: MaterialStatePropertyAll(),
-                          padding:
-                              const MaterialStatePropertyAll(EdgeInsets.all(0)),
-                          overlayColor: MaterialStatePropertyAll(
-                              Theme.of(context).primaryColor.withOpacity(.1)),
-                          shadowColor: const MaterialStatePropertyAll(
-                              Colors.transparent),
-                          foregroundColor: MaterialStatePropertyAll(
-                              Theme.of(context).primaryColor)),
-                      onPressed: () => _controller.text == ''
-                          ? null
-                          : setList(city: _controller.text),
-                      child: const Icon(FontAwesomeIcons.paperPlane))
-                ])),
+                )),
           ),
           SliverToBoxAdapter(
             child: FutureBuilder(
@@ -122,7 +98,6 @@ class _SearchPlaceState extends State<SearchPlace> {
                   }
                 }),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
           const SliverToBoxAdapter(child: Divider()),
           if (error != '')
             Text(error)
@@ -134,7 +109,9 @@ class _SearchPlaceState extends State<SearchPlace> {
                     min: 6,
                     max: 7))
           else if (isLoading!)
-            const SliverToBoxAdapter(child: CircularProgressIndicator())
+            const SliverToBoxAdapter(
+                child: RandomLoading(
+                    title: 'Loading...', description: '', min: 6, max: 7))
           else if (cities['results'] != null)
             for (Map<String, dynamic> city
                 in cities['results'] as List<dynamic>)

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/utils/dependencies.dart';
 

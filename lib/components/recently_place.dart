@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather/providers/init.dart';
 import 'package:weather/providers/local_storage.dart';
 import 'package:weather/utils/dependencies.dart';
@@ -14,10 +12,11 @@ class RecentlyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
     return InkWell(
+      radius: 10,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       onTap: () {
+        // Aggiorno i dati per la home
         weather.setData(
-            // Aggiorno i dati per la home
             ti: data['place'],
             cCode: data['country'],
             lat: data['latitude'],

@@ -6,9 +6,13 @@ import 'package:weather/providers/local_storage.dart';
 import '../../components/segmented_button.dart';
 import '../../utils/dependencies.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+  @override
+  State<Home> createState() => _HomeState();
+}
 
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
@@ -62,7 +66,7 @@ class Home extends StatelessWidget {
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         const SliverToBoxAdapter(child: Divider()),
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        SliverToBoxAdapter(
+                        /*SliverToBoxAdapter(
                             child: SizedBox(
                           height: 75,
                           child: ChartLineExample(
@@ -74,8 +78,8 @@ class Home extends StatelessWidget {
                               ],
                               horizontalAxisName: 'time',
                               verticalAxisNames: ['temperature_2m']),
-                        )),
-                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                        )),*/
+                        //const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverToBoxAdapter(
                             child: DailyListHorizontal(
                                 limit: limit,

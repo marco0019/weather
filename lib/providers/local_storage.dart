@@ -77,4 +77,14 @@ class LocalStorage {
       whereArgs: [latitude, longitude],
     );
   }
+
+  static Future<int> getIdFromCoordinates(String table,
+      {required double latitude, required double longitude}) async {
+    int id = 0;
+    await db.query(table, where: 'latitude = ? AND longitude = ?', whereArgs: [
+      latitude,
+      longitude
+    ]).then((value) => id = (value[0]['id'] as int));
+    return id;
+  }
 }

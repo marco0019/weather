@@ -38,8 +38,7 @@ class _PlacesSavedState extends State<PlacesSaved> {
                   child: RandomLoading(
                       title: "Favourites",
                       description: "You don't have any favorites yet",
-                      min: 6,
-                      max: 7));
+                      min: 6));
             }
             return Column(children: [
               for (Map<String, dynamic> place in snapshot.data!)
@@ -48,7 +47,10 @@ class _PlacesSavedState extends State<PlacesSaved> {
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           }
-          return const Text('loading');
+          return const RandomLoading(
+                      title: "Loading",
+                      description: "Please, wait a moment...",
+                      min: 6);
         },
       ),
     );

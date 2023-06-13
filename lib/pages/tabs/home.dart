@@ -14,19 +14,23 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+    LocalStorage.contains('PlaceSaved', latitude: 0, longitude: 0);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
     final day = context.watch<HomeProvider>();
     return FutureBuilder(
-        future: weather.fetchWeather(
-            latitude: weather.latitude!, longitude: weather.longitude!),
+        future: weather.weather,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var value = Map<String, dynamic>.from(snapshot.data as Map);
             final limit = value['daily']['time'].length;
             return FutureBuilder(
-                future: weather.fetchAirQuality(
-                    lat: weather.latitude!, lon: weather.longitude!),
+                future: weather.airQuality,
                 builder: (context, snapshot1) {
                   if (snapshot1.hasData) {
                     return CustomScrollView(
@@ -37,13 +41,29 @@ class _HomeState extends State<Home> {
                                   latitude: weather.latitude!,
                                   longitude: weather.longitude!),
                               builder: (context, contain) => IconButton(
-                                  onPressed: () => LocalStorage.insertData(
-                                      'PlaceSaved',
-                                      place: weather.title,
-                                      country: weather.countryCode,
-                                      longitude: weather.longitude!,
-                                      latitude: weather.latitude!,
-                                      once: true),
+                                  onPressed: () {
+                                    if (contain.hasData) {
+                                      if (contain.data!) {
+                                        LocalStorage.getIdFromCoordinates(
+                                                'PlaceSaved',
+                                                latitude: weather.latitude!,
+                                                longitude: weather.longitude!)
+                                            .then((value) =>
+                                                LocalStorage.delete(
+                                                    table: 'PlaceSaved',
+                                                    id: value));
+                                        //LocalStorage.delete(
+                                        //     table: 'PlaceSaved', id: 0);
+                                      } else {
+                                        LocalStorage.insertData('PlaceSaved',
+                                            place: weather.title,
+                                            country: weather.countryCode,
+                                            longitude: weather.longitude!,
+                                            latitude: weather.latitude!,
+                                            once: true);
+                                      }
+                                    }
+                                  },
                                   icon: iconFromSnapshot(contain))),
                           centerTitle: true,
                           pinned: true,
@@ -66,20 +86,6 @@ class _HomeState extends State<Home> {
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         const SliverToBoxAdapter(child: Divider()),
                         const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                        /*SliverToBoxAdapter(
-                            child: SizedBox(
-                          height: 75,
-                          child: ChartLineExample(
-                              date: DateTime.now(),
-                              lines: [value['hourly']],
-                              linesGradient: const [
-                                LinearGradient(
-                                    colors: [Colors.green, Colors.yellow])
-                              ],
-                              horizontalAxisName: 'time',
-                              verticalAxisNames: ['temperature_2m']),
-                        )),*/
-                        //const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverToBoxAdapter(
                             child: DailyListHorizontal(
                                 limit: limit,
@@ -89,7 +95,10 @@ class _HomeState extends State<Home> {
                         const SliverToBoxAdapter(child: SingleChoice()),
                         SliverToBoxAdapter(
                             child: SizedBox(
-                                height: (24 / day.range) * 73,
+                                height: (day.currentDay == 0
+                                        ? 24 - DateTime.now().hour
+                                        : 24 / day.range) *
+                                    73,
                                 child: PageView.builder(
                                     onPageChanged: (indexChanged) =>
                                         day.setCurrentDay(indexChanged),
@@ -157,12 +166,13 @@ class _HomeState extends State<Home> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('${snapshot.error}'));
                   }
-                  return const LinearProgressIndicator();
+                  return const RandomLoading(
+                      title: 'Loading', description: '', min: 6);
                 });
           } else if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));
           }
-          return const LinearProgressIndicator();
+          return const RandomLoading(title: 'Loading', description: '', min: 6);
         });
   }
 

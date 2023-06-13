@@ -92,9 +92,9 @@ class _SearchPlaceState extends State<SearchPlace> {
                           ]),
                     );
                   } else if (snapshot.hasError) {
-                    return const Text('errpre');
+                    return const SizedBox();
                   } else {
-                    return const Text('loading');
+                    return const SizedBox();
                   }
                 }),
           ),
@@ -104,8 +104,8 @@ class _SearchPlaceState extends State<SearchPlace> {
           else if (isLoading == null)
             const SliverToBoxAdapter(
                 child: RandomLoading(
-                    title: 'Cerca un luogo...',
-                    description: 'Non hai ancora cercato nessuno luogo',
+                    title: 'Search a place...',
+                    description: 'You haven\'t searched anywhere yet',
                     min: 6,
                     max: 7))
           else if (isLoading!)

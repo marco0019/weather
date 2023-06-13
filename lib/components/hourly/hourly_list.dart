@@ -26,7 +26,7 @@ final class HourlyList extends StatelessWidget {
               if (DateTime.parse(value['time'][i]).hour % range == 0 &&
                   DateTime.parse(value['time'][i]).year == day.year &&
                   DateTime.parse(value['time'][i]).month == day.month &&
-                  DateTime.parse(value['time'][i]).day == day.day)
+                  DateTime.parse(value['time'][i]).day == day.day && isInHour(day, DateTime.parse(value['time'][i]).hour))
                 HourlyCard(
                   uvIndex: value['uv_index'][i].toInt(),
                   visibility: value['visibility'][i].toInt(),
@@ -58,5 +58,11 @@ final class HourlyList extends StatelessWidget {
                 )
           ],
         ));
+  }
+
+  bool isInHour(DateTime date, int hour) {
+    var today = DateTime.now();
+    if (date.day == today.day && hour < today.hour) return false;
+    return true;
   }
 }

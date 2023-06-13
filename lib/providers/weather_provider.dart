@@ -7,9 +7,11 @@ import '../utils/dependencies.dart';
 class WeatherProvider with ChangeNotifier {
   String title = 'placeholder';
   String countryCode = 'it';
+  bool isSaved = false;
   double? latitude;
   double? longitude;
   late Future<Map<String, dynamic>> weather;
+  late Future<Map<String, dynamic>> airQuality;
   late Future<List<Map<String, dynamic>>> recentlyPlace;
   late Future<List<Map<String, dynamic>>> savedPlaces;
   int _currentIndex = 1;
@@ -34,7 +36,7 @@ class WeatherProvider with ChangeNotifier {
 
   void initData() async {
     List<Map<String, dynamic>> places = await LocalStorage.getItems('Recently');
-    debugPrint(places.toString());
+    //debugPrint(places.toString());
     if (places.isNotEmpty) {
       setData(
           ti: places[0]['place'],
@@ -51,12 +53,26 @@ class WeatherProvider with ChangeNotifier {
       required String cCode,
       required double lat,
       required double lon,
-      bool notify = true}) {
+      bool notify = true,
+      bool setData = true,
+      bool airQ = true}) {
     title = ti;
     countryCode = cCode;
     latitude = lat;
     longitude = lon;
+    LocalStorage.contains('PlaceSaved', latitude: lat, longitude: lon)
+        .then((value) {
+      isSaved = value;
+      notifyListeners();
+    });
+    if (setData) weather = fetchWeather(latitude: lat, longitude: lon);
+    if (airQ) airQuality = fetchAirQuality(lat: lat, lon: lon);
     if (notify) notifyListeners();
+  }
+
+  void setSavedPlace(bool value) {
+    isSaved = value;
+    notifyListeners();
   }
 
   void setRecentlyPlaces({bool notify = false}) {
@@ -97,11 +113,6 @@ class WeatherProvider with ChangeNotifier {
     }
   }
 
-  Future<List<dynamic>> fetchMapsOff(String city) async {
-    String jsonString = await rootBundle.loadString('assets/city.json');
-    return jsonDecode(jsonString);
-  }
-
   Future<Map<String, dynamic>> fetchAirQuality(
       {required double lat, required double lon}) async {
     final response = await get(Uri.parse(
@@ -111,11 +122,5 @@ class WeatherProvider with ChangeNotifier {
     } else {
       throw Exception('Failed to load cities');
     }
-  }
-
-  Future<Map<String, dynamic>> fetchAirQualityOff(
-      {required double lat, required double lon}) async {
-    String jsonString = await rootBundle.loadString('assets/air.json');
-    return jsonDecode(jsonString);
   }
 }

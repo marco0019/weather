@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:weather/main.dart';
-import 'package:weather/pages/frame.dart';
-import 'package:weather/providers/init.dart';
+import 'package:weather/pages/pages.dart';
+import 'package:weather/providers/providers.dart';
 import 'dependencies.dart';
 
 class GLOBAL {

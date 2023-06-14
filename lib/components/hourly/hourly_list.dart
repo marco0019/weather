@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/init.dart';
+import 'package:weather/components/components.dart';
 
 final class HourlyList extends StatelessWidget {
   final Map<String, dynamic> value;

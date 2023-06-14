@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/providers/home_provider.dart';
-import 'package:weather/providers/init.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class SingleChoice extends StatelessWidget {

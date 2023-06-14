@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:weather/components/dot.dart';
 import 'package:weather/utils/dependencies.dart';
 import 'dart:math';

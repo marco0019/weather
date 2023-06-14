@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/providers/init.dart';
-import 'package:weather/providers/local_storage.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class CityCard extends StatelessWidget {
@@ -34,6 +33,7 @@ class CityCard extends StatelessWidget {
               once: false);
           weather.setData(ti: place, cCode: countryCode, lat: lat, lon: lon);
           weather.setIndex(0);
+          context.read<HomeProvider>().setCurrentDay(0);
         },
         child: Container(
             padding: const EdgeInsets.all(10),

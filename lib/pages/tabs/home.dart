@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/init.dart';
-import 'package:weather/pages/meteogram.dart';
-import 'package:weather/providers/init.dart';
-import 'package:weather/providers/local_storage.dart';
-import '../../components/segmented_button.dart';
+import 'package:weather/components/components.dart';
+import 'package:weather/pages/pages.dart';
+import 'package:weather/providers/providers.dart';
 import '../../utils/dependencies.dart';
 
 class Home extends StatefulWidget {
@@ -37,9 +35,7 @@ class _HomeState extends State<Home> {
                       slivers: [
                         SliverAppBar(
                           leading: FutureBuilder(
-                              future: LocalStorage.contains('PlaceSaved',
-                                  latitude: weather.latitude!,
-                                  longitude: weather.longitude!),
+                              future: weather.isSaved,
                               builder: (context, contain) => IconButton(
                                   onPressed: () {
                                     if (contain.hasData) {
@@ -62,6 +58,7 @@ class _HomeState extends State<Home> {
                                             latitude: weather.latitude!,
                                             once: true);
                                       }
+                                      weather.setIsSaved(!contain.data!);
                                     }
                                   },
                                   icon: iconFromSnapshot(contain))),

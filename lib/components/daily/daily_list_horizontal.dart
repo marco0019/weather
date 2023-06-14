@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:weather/components/init.dart';
+import 'package:weather/components/components.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class DailyListHorizontal extends StatelessWidget {

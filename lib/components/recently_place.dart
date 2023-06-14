@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/providers/init.dart';
-import 'package:weather/providers/local_storage.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class RecentlyCard extends StatelessWidget {
@@ -24,62 +23,93 @@ class RecentlyCard extends StatelessWidget {
               lon: data['longitude']);
           LocalStorage.updateDate('Recently', data['id']);
           weather.setIndex(0); // cambio pagina
+          context.read<HomeProvider>().setCurrentDay(0);
         },
         onLongPress: () {
-          /*ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(seconds: 2),
-            behavior: SnackBarBehavior.floating,
-            content: const Text('prova'),
-            action: SnackBarAction(label: 'Retry', onPressed: () {}),
-          ));*/
+          bool isSaved = false;
+          LocalStorage.contains('PlaceSaved',
+                  latitude: data['latitude'], longitude: data['longitude'])
+              .then((value) => isSaved = value);
           showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    data['place'],
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 15),
-                  const Divider(),
-                  //const SizedBox(height: 10),
-                  Row(children: [
-                    const SizedBox(width: 10),
-                    const Text('Save'),
-                    const Spacer(),
-                    IconButton(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Text(
+                        data['place'],
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 15),
+                      const Divider(),
+                      ListTile(
+                        title: Text(isSaved ? 'Unsave' : 'Save'),
+                        trailing: IconButton(
+                            onPressed: () {
+                              if (isSaved) {
+                                // Elimina il posto dai preferiti
+                                LocalStorage.getIdFromCoordinates('PlaceSaved',
+                                        latitude: data['latitude'],
+                                        longitude: data['longitude'])
+                                    .then((value) => LocalStorage.delete(
+                                        table: 'PlaceSaved', id: value));
+                              } else {
+                                // Aggiungi il posto ai preferiti
+                                LocalStorage.insertData('PlaceSaved',
+                                    place: data['place'],
+                                    country: data['country'],
+                                    longitude: data['longitude'],
+                                    latitude: data['latitude'],
+                                    once: true);
+                              }
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 2),
+                                content: Text(
+                                    '${data['place']} has been ${isSaved ? 'removed' : 'added'} from your favourites'),
+                                behavior: SnackBarBehavior.floating,
+                              ));
+                            },
+                            icon: Icon(
+                                isSaved
+                                    ? FontAwesomeIcons.solidStar
+                                    : FontAwesomeIcons.star,
+                                size: 15)),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        title: const Text('Delete'),
+                        trailing: IconButton(
+                            onPressed: () {
+                              LocalStorage.delete(
+                                  table: 'Recently', id: data['id']);
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 2),
+                                content: Text('${data['place']} is eliminated'),
+                                behavior: SnackBarBehavior.floating,
+                              ));
+                              weather.setRecentlyPlaces(notify: true);
+                            },
+                            icon: const Icon(FontAwesomeIcons.trash, size: 15)),
+                      ),
+                      const Divider(),
+                      TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(FontAwesomeIcons.solidStar, size: 15))
-                  ]),
-                  const Divider(),
-                  Row(children: [
-                    const SizedBox(width: 10),
-                    const Text('Delete'),
-                    const Spacer(),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(FontAwesomeIcons.trash, size: 15))
-                  ]),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Close'),
+                        child: const Text('Close'),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          );
+                );
+              });
           //LocalStorage.delete(table: 'Recently', id: data['id'] as int);
           //weather.setRecentlyPlaces(notify: true);
         },

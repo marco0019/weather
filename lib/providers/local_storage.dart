@@ -24,8 +24,6 @@ class LocalStorage {
     });
   }
 
-  static Future<void> initTabla() async {}
-
   static Future<void> insertData(String table,
       {required String place,
       required String country,

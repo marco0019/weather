@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/init.dart';
-import 'package:weather/components/saved_place_card.dart';
-import 'package:weather/providers/init.dart';
+import 'package:weather/components/components.dart';
+import 'package:weather/providers/providers.dart';
 
 class PlacesSaved extends StatefulWidget {
   final WeatherProvider wp;

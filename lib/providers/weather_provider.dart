@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/providers/local_storage.dart';
+import 'package:weather/providers/providers.dart';
 import '../utils/dependencies.dart';
 
 class WeatherProvider with ChangeNotifier {
   String title = 'placeholder';
   String countryCode = 'it';
-  bool isSaved = false;
   double? latitude;
   double? longitude;
+  late Future<bool> isSaved;
   late Future<Map<String, dynamic>> weather;
   late Future<Map<String, dynamic>> airQuality;
   late Future<List<Map<String, dynamic>>> recentlyPlace;
@@ -29,7 +29,6 @@ class WeatherProvider with ChangeNotifier {
 
   WeatherProvider() {
     if (LocalStorage.db.isOpen) {
-      LocalStorage.initTabla();
       initData();
     }
   }
@@ -60,18 +59,15 @@ class WeatherProvider with ChangeNotifier {
     countryCode = cCode;
     latitude = lat;
     longitude = lon;
-    LocalStorage.contains('PlaceSaved', latitude: lat, longitude: lon)
-        .then((value) {
-      isSaved = value;
-      notifyListeners();
-    });
+    isSaved =
+        LocalStorage.contains('PlaceSaved', latitude: lat, longitude: lon);
     if (setData) weather = fetchWeather(latitude: lat, longitude: lon);
     if (airQ) airQuality = fetchAirQuality(lat: lat, lon: lon);
     if (notify) notifyListeners();
   }
 
-  void setSavedPlace(bool value) {
-    isSaved = value;
+  void setIsSaved(bool value) {
+    isSaved = Future.value(value);
     notifyListeners();
   }
 

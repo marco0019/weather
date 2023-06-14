@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/charts/chart_line.dart';
+import 'package:weather/components/components.dart';
 
 class MeteoGram extends StatelessWidget {
   final Map<String, dynamic> hourlyData;

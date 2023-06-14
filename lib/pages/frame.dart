@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather/components/init.dart';
-import 'package:weather/pages/init.dart';
-import 'package:weather/providers/init.dart';
+import 'package:weather/components/components.dart';
+import 'package:weather/pages/pages.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class Frame extends StatefulWidget {

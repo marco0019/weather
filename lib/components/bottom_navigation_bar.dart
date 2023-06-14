@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:weather/providers/init.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class BottomCustomBar extends StatelessWidget {
@@ -9,6 +8,7 @@ class BottomCustomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weather = context.watch<WeatherProvider>();
+    final theme = context.watch<ThemeModel>();
     var tabs = [
       {
         'title': 'Home',
@@ -32,15 +32,19 @@ class BottomCustomBar extends StatelessWidget {
       },
     ];
     return GNav(
-      //rippleColor: Colors.grey[300]!,
-      //hoverColor: Colors.grey[100]!,
+        //rippleColor: Colors.grey[300]!,
+        //hoverColor: Colors.grey[100]!,
+        style: GnavStyle.google,
         gap: 8,
-        backgroundColor: Colors.grey.withOpacity(.25),
+        backgroundColor: theme.isDarkMode
+            ? Colors.grey[900]!.withOpacity(.975)
+            : Colors.grey[200]!.withOpacity(.975),
         //activeColor: Colors.black,
         iconSize: 24,
         haptic: true,
-        tabMargin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        color: theme.isDarkMode ? Colors.grey[400]! : Colors.grey[800]!,
+        tabMargin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         duration: const Duration(milliseconds: 400),
         //tabBackgroundColor: Colors.grey[100]!,
         //tabBackgroundColor: Colors.grey[100]!,
@@ -48,14 +52,8 @@ class BottomCustomBar extends StatelessWidget {
         //color: Colors.black,
         selectedIndex: weather.currentIndex,
         onTabChange: (int index) {
-          if (index != 0) {
+          if (index != 0 || weather.latitude != null) {
             weather.setIndex(index);
-          }
-          else if (weather.latitude != null && weather.longitude != null) {
-            weather.setIndex(index);
-          }
-          else {
-            weather.setIndex(0);
           }
         },
         tabs: [

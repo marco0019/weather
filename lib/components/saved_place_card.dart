@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather/providers/init.dart';
-import 'package:weather/providers/local_storage.dart';
+import 'package:weather/providers/providers.dart';
 import 'package:weather/utils/dependencies.dart';
 
 class PlaceSavedCard extends StatefulWidget {
@@ -26,6 +25,7 @@ class _PlaceSavedCardState extends State<PlaceSavedCard> {
               lat: widget.data['latitude'],
               lon: widget.data['longitude']);
           weather.setIndex(0); // Cambia pagina
+          context.read<HomeProvider>().setCurrentDay(0);
           // Aggiornare o aggiungere il posto tra i recenti
           LocalStorage.contains('Recently',
                   latitude: widget.data['latitude'],

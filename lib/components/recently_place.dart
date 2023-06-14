@@ -52,6 +52,7 @@ class RecentlyCard extends StatelessWidget {
                             onPressed: () {
                               if (isSaved) {
                                 // Elimina il posto dai preferiti
+                                weather.setIsSaved(false);
                                 LocalStorage.getIdFromCoordinates('PlaceSaved',
                                         latitude: data['latitude'],
                                         longitude: data['longitude'])
@@ -65,6 +66,7 @@ class RecentlyCard extends StatelessWidget {
                                     longitude: data['longitude'],
                                     latitude: data['latitude'],
                                     once: true);
+                                weather.setIsSaved(true);
                               }
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)

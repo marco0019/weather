@@ -3,29 +3,28 @@ import 'package:weather/components/dot.dart';
 import 'package:weather/utils/dependencies.dart';
 import 'dart:math';
 
-class HourlyInfo extends StatelessWidget {
-  int? visibility;
-  double precipitation;
-  int probability;
-  int? umidity;
-  int? UVindex;
-  double temperature;
-  double percepita;
-  double windSpeed;
-  int windDirection;
-  double pressure;
-  double? o3;
-  double? no2;
-  double? so2;
-  double? pm10;
-  double? pm25;
-  int? aqi;
-  List<int> state = [];
+class HourlyInfo extends StatefulWidget {
+  final int? visibility;
+  final double precipitation;
+  final int probability;
+  final int? humidity;
+  final int? uvIndex;
+  final double temperature;
+  final double percepita;
+  final double windSpeed;
+  final int windDirection;
+  final double pressure;
+  final double? o3;
+  final double? no2;
+  final double? so2;
+  final double? pm10;
+  final double? pm25;
+  final int? aqi;
 
   HourlyInfo(
       {super.key,
       this.visibility = 0,
-      this.UVindex = 0,
+      this.uvIndex = 0,
       this.pressure = 0,
       this.o3 = 0,
       this.no2 = 0,
@@ -33,45 +32,54 @@ class HourlyInfo extends StatelessWidget {
       this.pm10 = 0,
       this.pm25 = 0,
       this.aqi = 0,
+      this.humidity = 0,
       required this.precipitation,
       required this.probability,
       required this.temperature,
       required this.percepita,
       required this.windSpeed,
-      required this.windDirection}) {
-    state = GLOBAL.GET_QUALITY_OF_AIR([
-      (pm25 ?? 10).toInt(),
-      (pm10 ?? 10).toInt(),
-      (no2 ?? 10).toInt(),
-      (o3 ?? 10).toInt(),
-      (so2 ?? 10).toInt()
-    ]);
-  }
+      required this.windDirection});
+  @override
+  State<HourlyInfo> createState() => _HourlyInfoState();
+}
 
+class _HourlyInfoState extends State<HourlyInfo> {
+  late List<int> state;
+  _HourlyInfoState() {
+    setState(() => state = GLOBAL.GET_QUALITY_OF_AIR([
+          (widget.pm25 ?? 10).toInt(),
+          (widget.pm10 ?? 10).toInt(),
+          (widget.no2 ?? 10).toInt(),
+          (widget.o3 ?? 10).toInt(),
+          (widget.so2 ?? 10).toInt()
+        ]));
+  }
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
-      if (visibility != null)
-        Text('Visibility - ${visibility! / 1000} km',
+      if (widget.visibility != null)
+        Text('Visibility - ${widget.visibility! / 1000} km',
             textAlign: TextAlign.center),
-      if (visibility != null) const SizedBox(height: 10),
-      Text('Precipitation - $precipitation mm', textAlign: TextAlign.center),
+      if (widget.visibility != null) const SizedBox(height: 10),
+      Text('Precipitation - ${widget.precipitation} mm',
+          textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      Text('Probability - $probability%', textAlign: TextAlign.center),
+      Text('Probability - ${widget.probability}%', textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      if (umidity != null)
-        Text('Umidity - $umidity %', textAlign: TextAlign.center),
-      if (umidity != null) const SizedBox(height: 10),
-      if (UVindex != null)
-        Text('UV index - $UVindex', textAlign: TextAlign.center),
-      if (UVindex != null) const SizedBox(height: 10),
-      Text('Temperature - $temperature °C', textAlign: TextAlign.center),
+      if (widget.humidity != null)
+        Text('Umidity - ${widget.humidity} %', textAlign: TextAlign.center),
+      if (widget.humidity != null) const SizedBox(height: 10),
+      if (widget.uvIndex != null)
+        Text('UV index - ${widget.uvIndex}', textAlign: TextAlign.center),
+      if (widget.uvIndex != null) const SizedBox(height: 10),
+      Text('Temperature - ${widget.temperature} °C',
+          textAlign: TextAlign.center),
       const SizedBox(height: 10),
-      Text('Percepita - $percepita °C', textAlign: TextAlign.center),
+      Text('Percepita - ${widget.percepita} °C', textAlign: TextAlign.center),
       const SizedBox(height: 10),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
-            'Wind - ${GLOBAL.GET_WIND_DIRECTION(windDirection)} $windSpeed km/h ',
+            'Wind - ${GLOBAL.GET_WIND_DIRECTION(widget.windDirection)} ${widget.windSpeed} km/h ',
             textAlign: TextAlign.center),
         Container(
             padding: const EdgeInsets.all(4),
@@ -79,11 +87,11 @@ class HourlyInfo extends StatelessWidget {
                 color: Colors.blueGrey,
                 borderRadius: BorderRadius.all(Radius.circular(100))),
             child: Transform.rotate(
-                angle: 180 / windDirection * pi,
+                angle: 180 / widget.windDirection * pi,
                 child: const Icon(FontAwesomeIcons.arrowRight, size: 10))),
       ]),
       const SizedBox(height: 10),
-      Text('Pressure - $pressure mb', textAlign: TextAlign.center),
+      Text('Pressure - ${widget.pressure} mb', textAlign: TextAlign.center),
       const SizedBox(height: 10),
       Card(
           child: Padding(
@@ -97,31 +105,31 @@ class HourlyInfo extends StatelessWidget {
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[3]]),
                     const SizedBox(width: 10),
-                    Text('O3 $o3 μg/m³')
+                    Text('O3 ${widget.o3} μg/m³')
                   ]),
                   const SizedBox(height: 10),
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[2]]),
                     const SizedBox(width: 10),
-                    Text('NO2 $no2 μg/m³')
+                    Text('NO2 ${widget.no2} μg/m³')
                   ]),
                   const SizedBox(height: 10),
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[4]]),
                     const SizedBox(width: 10),
-                    Text('SO2 $so2 μg/m³')
+                    Text('SO2 ${widget.so2} μg/m³')
                   ]),
                   const SizedBox(height: 10),
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[1]]),
                     const SizedBox(width: 10),
-                    Text('PM10 $pm10 μg/m³')
+                    Text('PM10 ${widget.pm10} μg/m³')
                   ]),
                   const SizedBox(height: 10),
                   Row(children: [
                     Dot(size: 10, color: GLOBAL.AIR_QUALITY_COLORS[state[0]]),
                     const SizedBox(width: 10),
-                    Text('PM2.5 $pm25 μg/m³')
+                    Text('PM2.5 ${widget.pm25} μg/m³')
                   ])
                 ]),
                 const Spacer(),
@@ -129,14 +137,14 @@ class HourlyInfo extends StatelessWidget {
                     animation: true,
                     animationDuration: 1000,
                     curve: Curves.bounceInOut,
-                    progressColor: GLOBAL.GET_COLOR_OF_AQI(aqi ?? 0),
+                    progressColor: GLOBAL.GET_COLOR_OF_AQI(widget.aqi ?? 0),
                     backgroundColor:
-                        GLOBAL.GET_COLOR_OF_AQI(aqi ?? 0).withAlpha(75),
+                        GLOBAL.GET_COLOR_OF_AQI(widget.aqi ?? 0).withAlpha(75),
                     radius: 90,
-                    percent: (aqi ?? 0) / 100,
+                    percent: (widget.aqi ?? 0) / 100,
                     lineWidth: 25,
                     circularStrokeCap: CircularStrokeCap.round,
-                    center: Text((aqi ?? '0').toString(),
+                    center: Text((widget.aqi ?? '0').toString(),
                         style: const TextStyle(fontSize: 50)))
               ])))
     ]);

@@ -80,7 +80,7 @@ class HourlyCard extends StatelessWidget {
                             no2: no2,
                             pm10: pm10,
                             pm25: pm25,
-                            UVindex: uvIndex,
+                            uvIndex: uvIndex,
                           ))),
           child: Padding(
             padding: const EdgeInsets.all(10),

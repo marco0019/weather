@@ -68,6 +68,13 @@ class _PlaceSavedCardState extends State<PlaceSavedCard> {
                 if (isSaved) {
                   LocalStorage.delete(
                       table: 'PlaceSaved', id: widget.data['id']);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: const Duration(seconds: 2),
+                    content: Text(
+                        '${widget.data['place']} has been ${isSaved ? 'removed' : 'added'} from your favourites'),
+                    behavior: SnackBarBehavior.floating,
+                  ));
+                  weather.setSavedPlaces(notify: true);
                 } else {
                   LocalStorage.insertData('PlaceSaved',
                       place: widget.data['place'],
@@ -75,6 +82,12 @@ class _PlaceSavedCardState extends State<PlaceSavedCard> {
                       longitude: widget.data['longitude'],
                       latitude: widget.data['latitude'],
                       once: true);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: const Duration(seconds: 2),
+                    content: Text(
+                        '${widget.data['place']} has been ${isSaved ? 'removed' : 'added'} from your favourites'),
+                    behavior: SnackBarBehavior.floating,
+                  ));
                 }
                 setState(() {
                   isSaved = !isSaved;

@@ -36,15 +36,12 @@ dev_dependencies:
 flutter_icons:
   androind: true
   ios: true
-  image_path: "assets/logo1.png"
+  image_path: "assets/logo.png"
 
 flutter:
 
   uses-material-design: true
   assets:
-    - assets/weather.json
-    - assets/city.json
-    - assets/air.json
     - assets/logo.png
     - assets/icons/wind.json
     - assets/icons/water.json

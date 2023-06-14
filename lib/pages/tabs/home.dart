@@ -50,6 +50,12 @@ class _HomeState extends State<Home> {
                                                     id: value));
                                         //LocalStorage.delete(
                                         //     table: 'PlaceSaved', id: 0);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              '${weather.title} has been ${contain.data! ? 'removed' : 'added'} from your favourites'),
+                                          behavior: SnackBarBehavior.floating,
+                                        ));
                                       } else {
                                         LocalStorage.insertData('PlaceSaved',
                                             place: weather.title,
@@ -57,6 +63,12 @@ class _HomeState extends State<Home> {
                                             longitude: weather.longitude!,
                                             latitude: weather.latitude!,
                                             once: true);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              '${weather.title} has been ${contain.data! ? 'removed' : 'added'} from your favourites'),
+                                          behavior: SnackBarBehavior.floating,
+                                        ));
                                       }
                                       weather.setIsSaved(!contain.data!);
                                     }

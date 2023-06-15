@@ -45,15 +45,18 @@ class HourlyInfo extends StatefulWidget {
 
 class _HourlyInfoState extends State<HourlyInfo> {
   late List<int> state;
-  _HourlyInfoState() {
-    setState(() => state = GLOBAL.GET_QUALITY_OF_AIR([
-          (widget.pm25 ?? 10).toInt(),
-          (widget.pm10 ?? 10).toInt(),
-          (widget.no2 ?? 10).toInt(),
-          (widget.o3 ?? 10).toInt(),
-          (widget.so2 ?? 10).toInt()
-        ]));
+  @override
+  void initState() {
+    super.initState();
+    state = GLOBAL.GET_QUALITY_OF_AIR([
+      (widget.pm25 ?? 10).toInt(),
+      (widget.pm10 ?? 10).toInt(),
+      (widget.no2 ?? 10).toInt(),
+      (widget.o3 ?? 10).toInt(),
+      (widget.so2 ?? 10).toInt()
+    ]);
   }
+
   @override
   Widget build(BuildContext context) {
     return ListView(children: [

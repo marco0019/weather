@@ -111,14 +111,7 @@ class HourlyCard extends StatelessWidget {
                   Text('$rain mm')
                 ]),
               const Spacer(),
-              //Transform.rotate(
-              //    angle: 180 / windDirection * pi,
-              //    child: const Icon(FontAwesomeIcons.arrowRight,
-              //        color: Colors.blue)),
-              //Text('$windSpeed km/h'),
-              //const Spacer(),
               const Icon(FontAwesomeIcons.droplet, color: Colors.blue),
-              //const SizedBox(width: 10),
               Text('$precipitationrobability%'),
               //const Spacer()
             ]),

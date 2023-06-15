@@ -66,6 +66,7 @@ class _PlaceSavedCardState extends State<PlaceSavedCard> {
           IconButton(
               onPressed: () {
                 if (isSaved) {
+                  weather.setIsSaved(false);
                   LocalStorage.delete(
                       table: 'PlaceSaved', id: widget.data['id']);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
